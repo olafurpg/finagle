@@ -80,7 +80,7 @@ object Finagle extends Build {
         <exclude org="javax.jms" module="jms" />
       </dependencies>,
 
-    scalacOptions := Seq(
+    scalacOptions ++= Seq(
       // Note: Add -deprecation when deprecated methods are removed
       "-target:jvm-1.8",
       "-unchecked",
