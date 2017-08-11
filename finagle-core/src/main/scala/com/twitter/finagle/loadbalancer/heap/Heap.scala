@@ -4,7 +4,7 @@ import scala.annotation.tailrec
 
 private object Heap {
   trait Indexer[-T] {
-    def apply(t: T, i: Int)
+    def apply(t: T, i: Int): Unit
   }
 
   object Indexer {

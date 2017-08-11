@@ -113,7 +113,7 @@ private[finagle] case class NameGroup(name: Name.Bound)
 
 @deprecated("Use `com.twitter.finagle.Name` to represent clusters instead", "6.7.x")
 trait MutableGroup[T] extends Group[T] {
-  def update(newMembers: Set[T])
+  def update(newMembers: Set[T]): Unit
 }
 
 /**

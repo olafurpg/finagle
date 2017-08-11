@@ -151,7 +151,7 @@ abstract class ExpiringService[Req, Rep](
     }
   }
 
-  protected def onExpire()
+  protected def onExpire(): Unit
 
   override def apply(req: Req): Future[Rep] = {
     val decrLatch = synchronized {

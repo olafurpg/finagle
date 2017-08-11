@@ -5,8 +5,8 @@ import java.util.concurrent.atomic.AtomicInteger
 import java.util.logging.{Logger, Level}
 
 trait Chan[-T] {
-  def !(elem: T)
-  def close()
+  def !(elem: T): Unit
+  def close(): Unit
 }
 
 /**
