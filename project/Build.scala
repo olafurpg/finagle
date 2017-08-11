@@ -60,8 +60,8 @@ object Finagle extends Build {
   val sharedSettings = Seq(
     version := libVersion,
     organization := "com.twitter",
-    scalaVersion := "2.12.1",
-    crossScalaVersions := Seq("2.11.11", "2.12.1"),
+    scalaVersion := "2.12.3",
+    crossScalaVersions := Seq("2.11.11", "2.12.3"),
     libraryDependencies ++= Seq(
       "org.scalacheck" %% "scalacheck" % "1.13.4" % "test",
       "org.scalatest" %% "scalatest" % "3.0.0" % "test",
@@ -81,7 +81,7 @@ object Finagle extends Build {
         <exclude org="javax.jms" module="jms" />
       </dependencies>,
 
-    scalacOptions := Seq(
+    scalacOptions ++= Seq(
       // Note: Add -deprecation when deprecated methods are removed
       "-target:jvm-1.8",
       "-unchecked",
