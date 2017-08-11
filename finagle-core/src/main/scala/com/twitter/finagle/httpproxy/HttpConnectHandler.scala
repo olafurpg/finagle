@@ -49,12 +49,12 @@ class HttpConnectHandler(
 
   private[this] val connectFuture = new AtomicReference[ChannelFuture](null)
 
-  private[this] def fail(c: Channel, t: Throwable) {
+  private[this] def fail(c: Channel, t: Throwable): Unit = {
     Option(connectFuture.get) foreach { _.setFailure(t) }
     Channels.close(c)
   }
 
-  private[this] def writeRequest(ctx: ChannelHandlerContext, e: ChannelStateEvent) {
+  private[this] def writeRequest(ctx: ChannelHandlerContext, e: ChannelStateEvent): Unit = {
     val hostNameWithPort = addr.getAddress.getHostName + ":" + addr.getPort
     val req = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.CONNECT, hostNameWithPort)
     req.headers().set("Host", hostNameWithPort)
@@ -64,7 +64,7 @@ class HttpConnectHandler(
     Channels.write(ctx, Channels.future(ctx.getChannel), req, null)
   }
 
-  override def connectRequested(ctx: ChannelHandlerContext, e: ChannelStateEvent) {
+  override def connectRequested(ctx: ChannelHandlerContext, e: ChannelStateEvent): Unit = {
     e match {
       case de: DownstreamChannelStateEvent =>
         if (!connectFuture.compareAndSet(null, e.getFuture)) {
@@ -75,7 +75,7 @@ class HttpConnectHandler(
         // proxy cancellation
         val wrappedConnectFuture = Channels.future(de.getChannel, true)
         de.getFuture.addListener(new ChannelFutureListener {
-          def operationComplete(f: ChannelFuture) {
+          def operationComplete(f: ChannelFuture): Unit = {
             if (f.isCancelled)
               wrappedConnectFuture.cancel()
           }
@@ -83,7 +83,7 @@ class HttpConnectHandler(
         // Proxy failures here so that if the connect fails, it is
         // propagated to the listener, not just on the channel.
         wrappedConnectFuture.addListener(new ChannelFutureListener {
-          def operationComplete(f: ChannelFuture) {
+          def operationComplete(f: ChannelFuture): Unit = {
             if (f.isSuccess || f.isCancelled)
               return
 
@@ -103,7 +103,7 @@ class HttpConnectHandler(
   }
 
   // we delay propagating connection upstream until we've completed the proxy connection.
-  override def channelConnected(ctx: ChannelHandlerContext, e: ChannelStateEvent) {
+  override def channelConnected(ctx: ChannelHandlerContext, e: ChannelStateEvent): Unit = {
     if (connectFuture.get eq null) {
       fail(ctx.getChannel, new InconsistentStateException(addr))
       return
@@ -111,7 +111,7 @@ class HttpConnectHandler(
 
     // proxy cancellations again.
     connectFuture.get.addListener(new ChannelFutureListener {
-      def operationComplete(f: ChannelFuture) {
+      def operationComplete(f: ChannelFuture): Unit = {
         if (f.isSuccess)
           HttpConnectHandler.super.channelConnected(ctx, e)
 
@@ -123,7 +123,7 @@ class HttpConnectHandler(
     writeRequest(ctx, e)
   }
 
-  override def messageReceived(ctx: ChannelHandlerContext, e: MessageEvent) {
+  override def messageReceived(ctx: ChannelHandlerContext, e: MessageEvent): Unit = {
     if (connectFuture.get eq null) {
       fail(ctx.getChannel, new InconsistentStateException(addr))
       return

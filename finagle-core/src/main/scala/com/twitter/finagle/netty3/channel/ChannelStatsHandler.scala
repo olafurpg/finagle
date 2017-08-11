@@ -45,7 +45,7 @@ class ChannelStatsHandler(statsReceiver: StatsReceiver)
     super.channelOpen(ctx, e)
   }
 
-  override def writeComplete(ctx: ChannelHandlerContext, e: WriteCompletionEvent) {
+  override def writeComplete(ctx: ChannelHandlerContext, e: WriteCompletionEvent): Unit = {
     val (_, channelWriteCount) = ctx.getAttachment().asInstanceOf[(AtomicLong, AtomicLong)]
 
     channelWriteCount.getAndAdd(e.getWrittenAmount)
@@ -54,7 +54,7 @@ class ChannelStatsHandler(statsReceiver: StatsReceiver)
     super.writeComplete(ctx, e)
   }
 
-  override def messageReceived(ctx: ChannelHandlerContext, e: MessageEvent) {
+  override def messageReceived(ctx: ChannelHandlerContext, e: MessageEvent): Unit = {
     e.getMessage match {
       case buffer: ChannelBuffer =>
         val (channelReadCount, _) = ctx.getAttachment().asInstanceOf[(AtomicLong, AtomicLong)]
@@ -68,12 +68,12 @@ class ChannelStatsHandler(statsReceiver: StatsReceiver)
     super.messageReceived(ctx, e)
   }
 
-  override def closeRequested(ctx: ChannelHandlerContext, e: ChannelStateEvent) {
+  override def closeRequested(ctx: ChannelHandlerContext, e: ChannelStateEvent): Unit = {
     closesCount.incr()
     super.closeRequested(ctx, e)
   }
 
-  override def channelClosed(ctx: ChannelHandlerContext, e: ChannelStateEvent) {
+  override def channelClosed(ctx: ChannelHandlerContext, e: ChannelStateEvent): Unit = {
     // guarded in case Netty calls channelClosed without calling channelOpen.
     if (elapsed != null) {
       val (channelReadCount, channelWriteCount) =
@@ -89,7 +89,7 @@ class ChannelStatsHandler(statsReceiver: StatsReceiver)
     super.channelClosed(ctx, e)
   }
 
-  override def exceptionCaught(ctx: ChannelHandlerContext, evt: ExceptionEvent) {
+  override def exceptionCaught(ctx: ChannelHandlerContext, evt: ExceptionEvent): Unit = {
     val m = if (evt.getCause != null) evt.getCause.getClass.getName else "unknown"
     exceptions.counter(m).incr()
     // If no Monitor is active, then log the exception so we don't fail silently.

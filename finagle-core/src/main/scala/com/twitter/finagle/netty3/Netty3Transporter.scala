@@ -61,7 +61,7 @@ private[netty3] class ChannelConnector[In, Out](
     }
 
     connectFuture.addListener(new ChannelFutureListener {
-      def operationComplete(f: ChannelFuture) {
+      def operationComplete(f: ChannelFuture): Unit = {
         val latency = elapsed().inMilliseconds
         if (f.isSuccess) {
           connectLatencyStat.add(latency)

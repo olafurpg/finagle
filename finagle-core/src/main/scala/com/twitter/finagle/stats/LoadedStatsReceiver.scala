@@ -46,7 +46,7 @@ private[finagle] object FinagleStatsReceiver extends {
 object ClientStatsReceiver extends StatsReceiverProxy {
   @volatile private[this] var _self: StatsReceiver = LoadedStatsReceiver.scope("clnt")
   def self: StatsReceiver = _self
-  def setRootScope(rootScope: String) {
+  def setRootScope(rootScope: String): Unit = {
     _self = LoadedStatsReceiver.scope(rootScope)
   }
 }
@@ -58,7 +58,7 @@ object ClientStatsReceiver extends StatsReceiverProxy {
 object ServerStatsReceiver extends StatsReceiverProxy {
   @volatile private[this] var _self: StatsReceiver = LoadedStatsReceiver.scope("srv")
   def self: StatsReceiver = _self
-  def setRootScope(rootScope: String) {
+  def setRootScope(rootScope: String): Unit = {
     _self = LoadedStatsReceiver.scope(rootScope)
   }
 }

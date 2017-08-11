@@ -41,7 +41,7 @@ private class NameTreeParsers private (str: String) {
     if (atEnd) EOI
     else str(idx)
 
-  private[this] def next() { idx += 1 }
+  private[this] def next(): Unit = { idx += 1 }
 
   private[this] def maybeEat(char: Char) =
     if (peek != char) false
@@ -50,18 +50,18 @@ private class NameTreeParsers private (str: String) {
       true
     }
 
-  private[this] def eat(char: Char) {
+  private[this] def eat(char: Char): Unit = {
     if (!maybeEat(char)) illegal(char, peek)
   }
 
-  private[this] def eatWhitespace() {
+  private[this] def eatWhitespace(): Unit = {
     while (!atEnd && (str(idx).isWhitespace || str(idx) == '#')) {
       if (str(idx) == '#') eatLine()
       else next()
     }
   }
 
-  private[this] def eatLine() {
+  private[this] def eatLine(): Unit = {
     while (!atEnd && str(idx) != '\n')
       next()
     if (!atEnd)
@@ -70,7 +70,7 @@ private class NameTreeParsers private (str: String) {
 
   private[this] def atEnd() = idx >= size
 
-  private[this] def ensureEnd() {
+  private[this] def ensureEnd(): Unit = {
     if (!atEnd)
       illegal(EOI, peek)
   }

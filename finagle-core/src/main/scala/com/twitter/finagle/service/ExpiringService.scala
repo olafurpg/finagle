@@ -124,7 +124,7 @@ abstract class ExpiringService[Req, Rep](
       timer.schedule(t.fromNow) { expire(counter) }
     }.getOrElse { NullTimerTask }
 
-  private[this] def expire(counter: Counter) {
+  private[this] def expire(counter: Counter): Unit = {
     if (deactivate()) {
       latch.await {
         expired()

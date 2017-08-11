@@ -161,6 +161,6 @@ object Group {
   @deprecated("Use `com.twitter.finagle.Name` to represent clusters instead", "2014-11-21")
   def mutable[T](initial: T*): MutableGroup[T] = new MutableGroup[T] {
     protected[finagle] val set = Var(Set(initial:_*))
-    def update(newMembers: Set[T]) { set() = newMembers }
+    def update(newMembers: Set[T]): Unit = { set() = newMembers }
   }
 }

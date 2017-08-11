@@ -17,13 +17,13 @@ class JavaLoggerStatsReceiver(logger: Logger, timer: Timer)
   def this(logger: Logger) = this(logger, DefaultTimer)
 
   def stat(name: String*): Stat = new Stat {
-    def add(value: Float) {
+    def add(value: Float): Unit = {
       logger.info("%s add %f".format(formatName(name), value))
     }
   }
 
   def counter(name: String*): Counter = new Counter {
-    def incr(delta: Int) {
+    def incr(delta: Int): Unit = {
       logger.info("%s incr %d".format(formatName(name), delta))
     }
   }

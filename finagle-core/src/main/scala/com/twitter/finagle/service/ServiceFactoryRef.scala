@@ -13,7 +13,7 @@ private[finagle] class ServiceFactoryRef[Req, Rep](
 ) extends ServiceFactoryProxy[Req, Rep](init) with Updatable[ServiceFactory[Req, Rep]] {
   @volatile private[this] var cur: ServiceFactory[Req, Rep] = init
 
-  def update(newFactory: ServiceFactory[Req, Rep]) {
+  def update(newFactory: ServiceFactory[Req, Rep]): Unit = {
     cur = newFactory
   }
 

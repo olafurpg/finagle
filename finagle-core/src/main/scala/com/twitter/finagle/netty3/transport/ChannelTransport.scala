@@ -33,7 +33,7 @@ class ChannelTransport[In, Out](ch: Channel)
     case e => fail(e)
   }
 
-  private[this] def fail(exc: Throwable) {
+  private[this] def fail(exc: Throwable): Unit = {
     if (!failed.compareAndSet(false, true))
       return
 
@@ -50,7 +50,7 @@ class ChannelTransport[In, Out](ch: Channel)
     closep.updateIfEmpty(Return(exc))
   }
 
-  override def handleUpstream(ctx: ChannelHandlerContext, e: ChannelEvent) {
+  override def handleUpstream(ctx: ChannelHandlerContext, e: ChannelEvent): Unit = {
     e match {
       case msg: MessageEvent =>
         readq.offer(msg.getMessage.asInstanceOf[Out])

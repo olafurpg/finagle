@@ -21,9 +21,9 @@ trait Proc[-T] extends Chan[T] {
   private[this] val nq = new AtomicInteger(0)
   @volatile private[this] var closed = false
 
-  def close() { closed = true }
+  def close(): Unit = { closed = true }
 
-  def !(elem: T) {
+  def !(elem: T): Unit = {
     q.offer(elem)
     if (nq.getAndIncrement() == 0)
       do {

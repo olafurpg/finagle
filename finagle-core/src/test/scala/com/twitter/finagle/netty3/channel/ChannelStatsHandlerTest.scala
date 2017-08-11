@@ -34,7 +34,7 @@ class ChannelStatsHandlerTest extends FunSpec with MockitoSugar {
     it("should count connections") {
       val sr = new InMemoryStatsReceiver()
 
-      def connectionsIs(num: Int) {
+      def connectionsIs(num: Int): Unit = {
         assert(sr.gauges(Seq("connections"))() == num)
       }
 

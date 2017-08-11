@@ -46,7 +46,7 @@ class SslClientConnectHandlerTest extends FunSuite with MockitoSugar {
     val ch = new SslClientConnectHandler(sslHandler, verifier)
     ch.handleDownstream(ctx, connectRequested)
 
-    def checkDidClose() {
+    def checkDidClose(): Unit = {
       val ec = ArgumentCaptor.forClass(classOf[DownstreamChannelStateEvent])
       verify(pipeline).sendDownstream(ec.capture)
       val e = ec.getValue

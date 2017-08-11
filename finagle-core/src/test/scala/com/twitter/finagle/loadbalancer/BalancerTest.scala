@@ -32,7 +32,7 @@ class BalancerTest extends FunSuite
     def _dist() = dist
     def _rebuild() = rebuild()
 
-    def rebuildDistributor() {}
+    def rebuildDistributor(): Unit = {}
 
     case class Distributor(vec: Vector[Node], gen: Int = 1)
       extends DistributorT[Node](vec) {
@@ -200,7 +200,7 @@ class BalancerTest extends FunSuite
       val beat = new AtomicInteger(1)
       @volatile var updateThreads: Set[Long] = Set.empty
 
-      override def rebuildDistributor() {
+      override def rebuildDistributor(): Unit = {
         synchronized { updateThreads += Thread.currentThread.getId() }
         waitForBeat(beat.getAndIncrement())
         waitForBeat(beat.getAndIncrement())
