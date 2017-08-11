@@ -131,7 +131,7 @@ class StackTest extends FunSuite {
     def mk() = (this, TestParam.param)
   }
   object TestParam {
-    implicit val param = Stack.Param(TestParam(1))
+    implicit val param: com.twitter.finagle.Stack.Param[StackTest.this.TestParam] = Stack.Param(TestParam(1))
   }
 
   case class TestParamInnerVar(p1: Int) {
@@ -139,7 +139,7 @@ class StackTest extends FunSuite {
     def mk() = (this, TestParamInnerVar.param)
   }
   object TestParamInnerVar {
-    implicit val param = Stack.Param(TestParamInnerVar(1))
+    implicit val param: com.twitter.finagle.Stack.Param[StackTest.this.TestParamInnerVar] = Stack.Param(TestParamInnerVar(1))
   }
 
   test("Params") {

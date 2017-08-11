@@ -111,7 +111,7 @@ object Netty3Transporter {
       (this, ChannelFactory.param)
   }
   object ChannelFactory {
-    implicit val param = Stack.Param(ChannelFactory(channelFactory))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.netty3.Netty3Transporter.ChannelFactory] = Stack.Param(ChannelFactory(channelFactory))
   }
 
   /**
@@ -123,7 +123,7 @@ object Netty3Transporter {
       (this, TransportFactory.param)
   }
   object TransportFactory {
-    implicit val param = Stack.Param(TransportFactory(new ChannelTransport(_)))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.netty3.Netty3Transporter.TransportFactory] = Stack.Param(TransportFactory(new ChannelTransport(_)))
   }
 
   /**

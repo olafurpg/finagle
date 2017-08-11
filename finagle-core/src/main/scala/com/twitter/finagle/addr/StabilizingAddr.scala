@@ -42,7 +42,7 @@ private[finagle] object StabilizingAddr {
   ): Offer[Addr] = new Offer[Addr] {
     import State._
 
-    implicit val injectTimer = timer
+    implicit val injectTimer: com.twitter.util.Timer = timer
 
     @volatile var nq = 0
     @volatile var healthStat = Healthy.id

@@ -44,7 +44,7 @@ object LoadBalancerFactory {
   }
 
   object HostStats {
-    implicit val param = Stack.Param(HostStats(NullStatsReceiver))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.loadbalancer.LoadBalancerFactory.HostStats] = Stack.Param(HostStats(NullStatsReceiver))
   }
 
   /**
@@ -58,7 +58,7 @@ object LoadBalancerFactory {
   }
 
   object Dest {
-    implicit val param = Stack.Param(Dest(Var.value(Addr.Neg)))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.loadbalancer.LoadBalancerFactory.Dest] = Stack.Param(Dest(Var.value(Addr.Neg)))
   }
 
   /**
@@ -72,7 +72,7 @@ object LoadBalancerFactory {
   }
 
   object ErrorLabel {
-    implicit val param = Stack.Param(ErrorLabel("unknown"))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.loadbalancer.LoadBalancerFactory.ErrorLabel] = Stack.Param(ErrorLabel("unknown"))
   }
 
   /**
@@ -85,7 +85,7 @@ object LoadBalancerFactory {
   }
 
   object Param {
-    implicit val param = Stack.Param(Param(DefaultBalancerFactory))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.loadbalancer.LoadBalancerFactory.Param] = Stack.Param(Param(DefaultBalancerFactory))
   }
 
   /**
@@ -110,7 +110,7 @@ object LoadBalancerFactory {
   }
 
   object AddressOrdering {
-    implicit val param = new Stack.Param[AddressOrdering] {
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.loadbalancer.LoadBalancerFactory.AddressOrdering] = new Stack.Param[AddressOrdering] {
       def default: AddressOrdering = AddressOrdering(defaultAddressOrdering)
     }
   }
@@ -129,7 +129,7 @@ object LoadBalancerFactory {
   }
 
   object WhenNoNodesOpenParam {
-    implicit val param = new Stack.Param[WhenNoNodesOpenParam] {
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.loadbalancer.LoadBalancerFactory.WhenNoNodesOpenParam] = new Stack.Param[WhenNoNodesOpenParam] {
       def default: WhenNoNodesOpenParam = WhenNoNodesOpenParam(WhenNoNodesOpen.PickOne)
     }
   }

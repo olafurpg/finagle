@@ -47,7 +47,7 @@ object FailFastFactory {
       (this, FailFast.param)
   }
   object FailFast {
-    implicit val param = Stack.Param(FailFast(enabled = true))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.service.FailFastFactory.FailFast] = Stack.Param(FailFast(enabled = true))
   }
 
   /**

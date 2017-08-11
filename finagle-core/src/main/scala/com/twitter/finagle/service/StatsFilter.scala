@@ -20,7 +20,7 @@ object StatsFilter {
   }
 
   object Param {
-    implicit val param = Stack.Param(Param(TimeUnit.MILLISECONDS))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.service.StatsFilter.Param] = Stack.Param(Param(TimeUnit.MILLISECONDS))
   }
 
   /**

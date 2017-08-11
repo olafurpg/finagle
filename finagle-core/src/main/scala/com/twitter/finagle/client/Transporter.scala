@@ -39,7 +39,7 @@ object Transporter {
       (this, EndpointAddr.param)
   }
   object EndpointAddr {
-    implicit val param =
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.Transporter.EndpointAddr] =
       Stack.Param(EndpointAddr(Address.failing))
   }
 
@@ -57,7 +57,7 @@ object Transporter {
       (this, ConnectTimeout.param)
   }
   object ConnectTimeout {
-    implicit val param = Stack.Param(ConnectTimeout(1.second))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.Transporter.ConnectTimeout] = Stack.Param(ConnectTimeout(1.second))
   }
 
   /**
@@ -68,7 +68,7 @@ object Transporter {
       (this, SocksProxy.param)
   }
   object SocksProxy {
-    implicit val param = Stack.Param(SocksProxy(
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.Transporter.SocksProxy] = Stack.Param(SocksProxy(
       SocksProxyFlags.socksProxy,
       SocksProxyFlags.socksUsernameAndPassword
     ))
@@ -85,12 +85,12 @@ object Transporter {
     def this(sa: Option[SocketAddress]) = this(sa, None)
   }
   object HttpProxy {
-    implicit val param = Stack.Param(HttpProxy(None, None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.Transporter.HttpProxy] = Stack.Param(HttpProxy(None, None))
   }
 
   case class HttpProxyTo(hostAndCredentials: Option[(String, Option[Credentials])])
   object HttpProxyTo {
-    implicit val param = Stack.Param(HttpProxyTo(None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.Transporter.HttpProxyTo] = Stack.Param(HttpProxyTo(None))
   }
 
   /**
@@ -110,7 +110,7 @@ object Transporter {
       (this, TrafficClass.param)
   }
   object TrafficClass {
-    implicit val param = Stack.Param(TrafficClass(None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.Transporter.TrafficClass] = Stack.Param(TrafficClass(None))
   }
 
 }

@@ -32,7 +32,7 @@ object LatencyCompensation {
       def apply(v1: Metadata): Duration = Duration.Zero
       override def toString: String = "NoCompensation"
     }
-    implicit val param =
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.LatencyCompensation.Compensator] =
       Stack.Param(Compensator(Default))
   }
 
@@ -68,7 +68,7 @@ object LatencyCompensation {
       (this, Compensation.param)
   }
   private[finagle] object Compensation {
-    implicit val param =
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.LatencyCompensation.Compensation] =
       Stack.Param(Compensation(Duration.Zero))
   }
 

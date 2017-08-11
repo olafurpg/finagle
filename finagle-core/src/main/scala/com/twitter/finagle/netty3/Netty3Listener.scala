@@ -34,7 +34,7 @@ object Netty3Listener {
   private class Closer(timer: com.twitter.util.Timer) {
     val activeChannels = new DefaultChannelGroup
 
-    private implicit val implicitTimer = timer
+    private implicit val implicitTimer: com.twitter.util.Timer = timer
 
     /**
      * Close the channels managed by this Closer. Closer
@@ -139,7 +139,7 @@ object Netty3Listener {
       (this, ChannelFactory.param)
   }
   object ChannelFactory {
-    implicit val param = Stack.Param(ChannelFactory(channelFactory))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.netty3.Netty3Listener.ChannelFactory] = Stack.Param(ChannelFactory(channelFactory))
   }
 
   /**

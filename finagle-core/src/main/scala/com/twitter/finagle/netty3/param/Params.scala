@@ -12,5 +12,5 @@ private[finagle] case class Netty3Timer(timer: Timer) {
     (this, Netty3Timer.param)
 }
 private[finagle] object Netty3Timer {
-  implicit val param = Stack.Param(Netty3Timer(HashedWheelTimer.nettyHwt))
+  implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.netty3.param.Netty3Timer] = Stack.Param(Netty3Timer(HashedWheelTimer.nettyHwt))
 }

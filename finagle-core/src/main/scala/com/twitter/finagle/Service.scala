@@ -240,7 +240,7 @@ object FactoryToService {
       (this, Enabled.param)
   }
   object Enabled {
-    implicit val param = Stack.Param(Enabled(false))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.FactoryToService.Enabled] = Stack.Param(Enabled(false))
   }
 
   /**

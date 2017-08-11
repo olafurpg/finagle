@@ -117,7 +117,7 @@ object ClientConfig {
       (this, DestName.param)
   }
   private[finagle] object DestName {
-    implicit val param = Stack.Param(DestName(Name.empty))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.builder.ClientConfig.DestName] = Stack.Param(DestName(Name.empty))
   }
 
   private[builder] case class Daemonize(onOrOff: Boolean) {
@@ -125,7 +125,7 @@ object ClientConfig {
       (this, Daemonize.param)
   }
   private[builder] object Daemonize {
-    implicit val param = Stack.Param(Daemonize(true))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.builder.ClientConfig.Daemonize] = Stack.Param(Daemonize(true))
   }
 
   private[builder] case class MonitorFactory(mFactory: String => util.Monitor) {
@@ -133,7 +133,7 @@ object ClientConfig {
       (this, MonitorFactory.param)
   }
   private[builder] object MonitorFactory {
-    implicit val param = Stack.Param(MonitorFactory(_ => NullMonitor))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.builder.ClientConfig.MonitorFactory] = Stack.Param(MonitorFactory(_ => NullMonitor))
   }
 
   // historical defaults for ClientBuilder

@@ -138,7 +138,7 @@ object BindingFactory {
       (this, Dest.param)
   }
   object Dest {
-    implicit val param = Stack.Param(Dest(Name.Path(Path.read("/$/fail"))))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.naming.BindingFactory.Dest] = Stack.Param(Dest(Name.Path(Path.read("/$/fail"))))
   }
 
   private[finagle] val DefaultBaseDtab = new Function0[Dtab] {
@@ -156,7 +156,7 @@ object BindingFactory {
       (this, BaseDtab.param)
   }
   object BaseDtab {
-    implicit val param = Stack.Param(BaseDtab(DefaultBaseDtab))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.naming.BindingFactory.BaseDtab] = Stack.Param(BaseDtab(DefaultBaseDtab))
   }
 
   /**

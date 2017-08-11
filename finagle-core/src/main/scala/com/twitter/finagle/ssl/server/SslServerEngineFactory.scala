@@ -38,7 +38,7 @@ object SslServerEngineFactory {
       (this, Param.param)
   }
   object Param {
-    implicit val param = Stack.Param(Param(JdkServerEngineFactory))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.ssl.server.SslServerEngineFactory.Param] = Stack.Param(Param(JdkServerEngineFactory))
   }
 
   def configureClientAuth(

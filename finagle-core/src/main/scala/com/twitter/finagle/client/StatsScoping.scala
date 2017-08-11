@@ -29,7 +29,7 @@ object StatsScoping {
         def apply(stats: StatsReceiver, md: Metadata): StatsReceiver = stats
         override def toString: String = "Unscoped"
       }
-    implicit val param = Stack.Param(Scoper(DefaultFn))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.StatsScoping.Scoper] = Stack.Param(Scoper(DefaultFn))
   }
 
   def module[Req, Rep]: Stackable[ServiceFactory[Req, Rep]] =

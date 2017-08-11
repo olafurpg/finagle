@@ -110,7 +110,7 @@ object FailureDetector {
   }
 
   case object Param {
-    implicit val param = Stack.Param(Param(GlobalFlagConfig))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.liveness.FailureDetector.Param] = Stack.Param(Param(GlobalFlagConfig))
   }
 
   private[this] val log = Logger.getLogger(getClass.getName)

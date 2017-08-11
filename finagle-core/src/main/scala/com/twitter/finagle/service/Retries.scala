@@ -36,7 +36,7 @@ object Retries {
       (this, Policy.param)
   }
   private[twitter] object Policy {
-    implicit val param = Stack.Param(Policy(RetryPolicy.Never))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.service.Retries.Policy] = Stack.Param(Policy(RetryPolicy.Never))
   }
 
   /**

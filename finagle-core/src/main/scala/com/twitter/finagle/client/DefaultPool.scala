@@ -42,7 +42,7 @@ object DefaultPool {
       (this, Param.param)
   }
   object Param {
-    implicit val param = Stack.Param(Param(0, Int.MaxValue, 0, Duration.Top, Int.MaxValue))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.DefaultPool.Param] = Stack.Param(Param(0, Int.MaxValue, 0, Duration.Top, Int.MaxValue))
   }
 
   /**

@@ -41,7 +41,7 @@ object Listener {
       (this, Backlog.param)
   }
   object Backlog {
-    implicit val param = Stack.Param(Backlog(None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.server.Listener.Backlog] = Stack.Param(Backlog(None))
   }
 
   /**
@@ -56,6 +56,6 @@ object Listener {
       (this, TrafficClass.param)
   }
   object TrafficClass {
-    implicit val param = Stack.Param(TrafficClass(None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.server.Listener.TrafficClass] = Stack.Param(TrafficClass(None))
   }
 }

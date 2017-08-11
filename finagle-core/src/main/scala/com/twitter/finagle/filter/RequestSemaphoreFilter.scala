@@ -16,7 +16,7 @@ object RequestSemaphoreFilter {
       (this, Param.param)
   }
   object Param {
-    implicit val param = Stack.Param(Param(None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.filter.RequestSemaphoreFilter.Param] = Stack.Param(Param(None))
   }
 
   /**

@@ -30,7 +30,7 @@ object PendingRequestFilter {
   }
 
   object Param {
-    implicit val param = Stack.Param(Param(None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.service.PendingRequestFilter.Param] = Stack.Param(Param(None))
   }
 
   private[finagle] def module[Req, Rep]: Stackable[ServiceFactory[Req, Rep]] =

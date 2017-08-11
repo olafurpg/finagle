@@ -80,7 +80,7 @@ object ServerConfig {
       (this, BindTo.param)
   }
   private[builder] object BindTo {
-    implicit val param = Stack.Param(BindTo(new SocketAddress {
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.builder.ServerConfig.BindTo] = Stack.Param(BindTo(new SocketAddress {
       override val toString = "unknown"
     }))
   }
@@ -90,7 +90,7 @@ object ServerConfig {
       (this, MonitorFactory.param)
   }
   private[builder] object MonitorFactory {
-    implicit val param = Stack.Param(MonitorFactory((_, _) => NullMonitor))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.builder.ServerConfig.MonitorFactory] = Stack.Param(MonitorFactory((_, _) => NullMonitor))
   }
 
   private[builder] case class Daemonize(onOrOff: Boolean) {
@@ -98,7 +98,7 @@ object ServerConfig {
       (this, Daemonize.param)
   }
   private[builder] object Daemonize {
-    implicit val param = Stack.Param(Daemonize(false))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.builder.ServerConfig.Daemonize] = Stack.Param(Daemonize(false))
   }
 }
 

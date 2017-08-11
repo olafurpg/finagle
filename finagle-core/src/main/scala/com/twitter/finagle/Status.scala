@@ -26,7 +26,7 @@ sealed trait Status
  * (An [[scala.math.Ordering]] is defined in these terms.)
  */
 object Status {
-  private implicit val timer = DefaultTimer
+  private implicit val timer: com.twitter.finagle.util.DefaultTimer.type = DefaultTimer
 
   class ClosedException
     extends Exception("Status was Closed; expected Open")

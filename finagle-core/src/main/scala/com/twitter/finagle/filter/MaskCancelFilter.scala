@@ -13,7 +13,7 @@ object MaskCancelFilter {
       (this, Param.param)
   }
   object Param {
-    implicit val param = Stack.Param(Param(false))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.filter.MaskCancelFilter.Param] = Stack.Param(Param(false))
   }
 
   /**

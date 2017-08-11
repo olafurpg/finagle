@@ -116,7 +116,7 @@ object Transport {
       (this, BufferSizes.param)
   }
   object BufferSizes {
-    implicit val param = Stack.Param(BufferSizes(None, None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.transport.Transport.BufferSizes] = Stack.Param(BufferSizes(None, None))
   }
 
   /**
@@ -141,7 +141,7 @@ object Transport {
       (this, Liveness.param)
   }
   object Liveness {
-    implicit val param = Stack.Param(Liveness(Duration.Top, Duration.Top, None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.transport.Transport.Liveness] = Stack.Param(Liveness(Duration.Top, Duration.Top, None))
   }
 
   /**
@@ -153,7 +153,7 @@ object Transport {
       (this, Verbose.param)
   }
   object Verbose {
-    implicit val param = Stack.Param(Verbose(enabled = false))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.transport.Transport.Verbose] = Stack.Param(Verbose(enabled = false))
   }
 
   /**
@@ -164,7 +164,7 @@ object Transport {
       (this, ClientSsl.param)
   }
   object ClientSsl {
-    implicit val param = Stack.Param(ClientSsl(None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.transport.Transport.ClientSsl] = Stack.Param(ClientSsl(None))
   }
 
   /**
@@ -175,7 +175,7 @@ object Transport {
       (this, ServerSsl.param)
   }
   object ServerSsl {
-    implicit val param = Stack.Param(ServerSsl(None))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.transport.Transport.ServerSsl] = Stack.Param(ServerSsl(None))
   }
 
   /**

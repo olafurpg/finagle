@@ -22,7 +22,7 @@ object AddrMetadataExtraction {
     def mk(): (AddrMetadata, Stack.Param[AddrMetadata]) = (this, AddrMetadata.param)
   }
   object AddrMetadata {
-    implicit val param = Stack.Param(AddrMetadata(Addr.Metadata.empty))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.client.AddrMetadataExtraction.AddrMetadata] = Stack.Param(AddrMetadata(Addr.Metadata.empty))
   }
 
   def module[Req, Rep]: Stackable[ServiceFactory[Req, Rep]] =

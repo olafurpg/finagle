@@ -15,7 +15,7 @@ object TimeoutFactory {
       (this, Param.param)
   }
   object Param {
-    implicit val param = Stack.Param(Param(Duration.Top))
+    implicit val param: com.twitter.finagle.Stack.Param[com.twitter.finagle.factory.TimeoutFactory.Param] = Stack.Param(Param(Duration.Top))
   }
 
   /**
