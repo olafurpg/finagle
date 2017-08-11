@@ -86,6 +86,7 @@ object Finagle extends Build {
       "-target:jvm-1.8",
       "-unchecked",
       "-feature",
+      "-Ywarn-unused-import",
       "-language:_",
       "-encoding", "utf8",
       "-Xlint:-missing-interpolator",
