@@ -4,6 +4,7 @@ import com.twitter.finagle.{Addr, Dtab}
 import com.twitter.util.{Closable, Var, Witness}
 import java.util.concurrent.atomic.AtomicReference
 import scala.collection.mutable
+import strawman.collection.immutable.Map
 
 /**
  * For all paths registered to a given client and Dtab, the [[EndpointRegistry]]

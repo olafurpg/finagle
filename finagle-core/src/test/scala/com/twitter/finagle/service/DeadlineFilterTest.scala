@@ -9,6 +9,7 @@ import org.junit.runner.RunWith
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
+import strawman.collection.immutable.List
 
 @RunWith(classOf[JUnitRunner])
 class DeadlineFilterTest extends FunSuite with MockitoSugar with OneInstancePerTest {

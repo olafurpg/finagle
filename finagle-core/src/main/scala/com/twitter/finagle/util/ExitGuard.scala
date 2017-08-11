@@ -5,6 +5,8 @@ package com.twitter.finagle.util
  * ExitGuard prevents the process from exiting normally by use of a
  * nondaemon thread whenever there is at least one guarder.
  */
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ List, Nil }
 object ExitGuard {
   @volatile private[util] var guards: Option[(Thread, List[Guard])] = None
 

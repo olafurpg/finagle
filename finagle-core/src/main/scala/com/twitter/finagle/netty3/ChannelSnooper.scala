@@ -5,6 +5,8 @@ import java.nio.charset.Charset
 
 import org.jboss.netty.channel._
 import org.jboss.netty.buffer.ChannelBuffer
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Range
 
 /** Log events on channels */
 trait ChannelSnooper extends ChannelDownstreamHandler with ChannelUpstreamHandler {
@@ -69,7 +71,7 @@ class ChannelBufferSnooper(val name: String) extends ChannelSnooper {
         '?'
     }
 
-    for (i <- 0 until asciiStr.length by 60)
+    for (i <- Range(0, asciiStr.length) by 60)
       printer(ch, asciiStr.slice(i, i + 60).lines.mkString("\\n"))
   }
 }

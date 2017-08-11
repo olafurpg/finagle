@@ -9,6 +9,7 @@ import com.twitter.finagle.util.{DefaultTimer, InetSocketAddressUtil, Updater}
 import com.twitter.logging.Logger
 import com.twitter.util.{Await, Closable, Var, _}
 import java.net.{InetAddress, InetSocketAddress, UnknownHostException}
+import strawman.collection.immutable.{ #::, LazyList }
 
 private[finagle] class DnsResolver(statsReceiver: StatsReceiver, resolvePool: FuturePool)
   extends (String => Future[Seq[InetAddress]]) {
@@ -178,7 +179,7 @@ object FixedInetResolver {
     apply(unscopedStatsReceiver, 16000)
 
   def apply(unscopedStatsReceiver: StatsReceiver, maxCacheSize: Long): InetResolver =
-    apply(unscopedStatsReceiver, maxCacheSize, Stream.empty, DefaultTimer)
+    apply(unscopedStatsReceiver, maxCacheSize, LazyList.empty, DefaultTimer)
 
   /**
    * Uses a [[com.twitter.util.Future]] cache to memoize lookups.
@@ -191,7 +192,7 @@ object FixedInetResolver {
   def apply(
     unscopedStatsReceiver: StatsReceiver,
     maxCacheSize: Long,
-    backoffs: Stream[Duration],
+    backoffs: LazyList[Duration],
     timer: Timer
   ): InetResolver = {
     val statsReceiver = unscopedStatsReceiver.scope("inet").scope("dns")
@@ -203,20 +204,20 @@ object FixedInetResolver {
   private[finagle] def cache(
     resolveHost: String => Future[Seq[InetAddress]],
     maxCacheSize: Long,
-    backoffs: Stream[Duration] = Stream.empty,
+    backoffs: LazyList[Duration] = LazyList.empty,
     timer: Timer = DefaultTimer
   ): LoadingCache[String, Future[Seq[InetAddress]]] = {
 
     val cacheLoader = new CacheLoader[String, Future[Seq[InetAddress]]]() {
       def load(host: String): Future[Seq[InetAddress]] = {
         // Optionally retry failed DNS resolutions with specified backoff.
-        def retryingLoad(nextBackoffs: Stream[Duration]): Future[Seq[InetAddress]] = {
+        def retryingLoad(nextBackoffs: LazyList[Duration]): Future[Seq[InetAddress]] = {
           resolveHost(host).rescue { case exc: UnknownHostException =>
             nextBackoffs match {
               case nextBackoff #:: restBackoffs =>
                 log.debug(s"Caught UnknownHostException resolving host '$host'. Retrying in $nextBackoff...")
                 Future.sleep(nextBackoff)(timer).before(retryingLoad(restBackoffs))
-              case Stream.Empty =>
+              case LazyList.Empty =>
                 Future.exception(exc)
             }
           }

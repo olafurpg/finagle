@@ -3,6 +3,7 @@ package com.twitter.finagle
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import strawman.collection.immutable.{ List, Nil }
 
 @RunWith(classOf[JUnitRunner])
 class StackTest extends FunSuite {

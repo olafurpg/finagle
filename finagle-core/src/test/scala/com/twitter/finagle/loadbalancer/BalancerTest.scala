@@ -9,6 +9,7 @@ import org.scalatest.FunSuite
 import org.scalatest.concurrent.Conductors
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import scala.language.reflectiveCalls
+import strawman.collection.immutable.Vector
 
 class BalancerTest extends FunSuite
   with Conductors

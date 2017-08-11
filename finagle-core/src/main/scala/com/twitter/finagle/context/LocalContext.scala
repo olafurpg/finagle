@@ -1,6 +1,7 @@
 package com.twitter.finagle.context
 
 import com.twitter.util.Local
+import strawman.collection.immutable.Map
 
 /**
  * A type of context that is local to the process. The type of Key is

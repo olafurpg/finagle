@@ -2,6 +2,7 @@ package com.twitter.finagle.loadbalancer.p2c
 
 import com.twitter.finagle.loadbalancer.{Balancer, DistributorT}
 import com.twitter.finagle.util.Rng
+import strawman.collection.immutable.Vector
 
 /**
  * A mix-in that defines a [[DistributorT]] which uses [[P2CPick]].

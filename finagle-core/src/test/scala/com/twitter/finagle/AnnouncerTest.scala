@@ -5,6 +5,7 @@ import java.net.{InetAddress, InetSocketAddress}
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import strawman.collection.immutable.List
 
 case class TestAnnouncement(ia: InetSocketAddress, addr: String) extends Announcement {
   def unannounce() = Future.Done

@@ -2,6 +2,7 @@ package com.twitter.finagle
 
 import java.net.{InetAddress, InetSocketAddress}
 import org.scalatest.FunSuite
+import strawman.collection.immutable.Range
 
 class AddressTest extends FunSuite {
   test("constructor with no host points to localhost") {
@@ -9,7 +10,7 @@ class AddressTest extends FunSuite {
   }
 
   test("OctetOrdering is nop for unresolved addresses") {
-    val unresolvedAddresses: Seq[Address.Inet] = (10 until 0 by -1).map { i =>
+    val unresolvedAddresses: Seq[Address.Inet] = (Range(10, 0) by -1).map { i =>
       Address.Inet(InetSocketAddress.createUnresolved(s"address-$i", 0),
         Addr.Metadata.empty)
     }
@@ -21,7 +22,7 @@ class AddressTest extends FunSuite {
 
   test("OctetOrdering") {
     val size = 10
-    val addresses: Seq[Address.Inet] = (size until 0 by -1).map { i =>
+    val addresses: Seq[Address.Inet] = (Range(size, 0) by -1).map { i =>
       val inet = InetAddress.getByAddress(Array[Byte](10, 0, 0, i.toByte))
       Address.Inet(new InetSocketAddress(inet, 0), Addr.Metadata.empty)
     }

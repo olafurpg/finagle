@@ -5,6 +5,8 @@ import com.twitter.util.{Duration, Time, TimeFormat}
 import java.net.InetSocketAddress
 import java.nio.ByteBuffer
 import java.util.logging.Logger
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ List, Nil }
 
 private[tracing] object RecordTimeFormat
   extends TimeFormat("MMdd HH:mm:ss.SSS")

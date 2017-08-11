@@ -4,6 +4,7 @@ import com.twitter.conversions.time._
 import com.twitter.finagle.service.Backoff
 import com.twitter.finagle.util.Ema
 import com.twitter.util.{Duration, Stopwatch}
+import strawman.collection.immutable.LazyList
 
 /**
  * A `FailureAccrualPolicy` is used by `FailureAccrualFactory` to determine
@@ -64,7 +65,7 @@ object FailureAccrualPolicy {
   private[this] abstract class SuccessRateFailureAccrualPolicy(
     requiredSuccessRate: Double,
     window: Long,
-    markDeadFor: Stream[Duration]
+    markDeadFor: LazyList[Duration]
   ) extends FailureAccrualPolicy {
     assert(requiredSuccessRate >= 0.0 && requiredSuccessRate <= 1.0,
       s"requiredSuccessRate must be [0, 1]: $requiredSuccessRate")
@@ -142,7 +143,7 @@ object FailureAccrualPolicy {
   def successRate(
     requiredSuccessRate: Double,
     window: Int,
-    markDeadFor: Stream[Duration]
+    markDeadFor: LazyList[Duration]
   ): FailureAccrualPolicy = {
     new SuccessRateFailureAccrualPolicy(requiredSuccessRate, window, markDeadFor) {
       private[this] var totalRequests = 0L
@@ -181,7 +182,7 @@ object FailureAccrualPolicy {
   def successRateWithinDuration(
     requiredSuccessRate: Double,
     window: Duration,
-    markDeadFor: Stream[Duration]
+    markDeadFor: LazyList[Duration]
   ): FailureAccrualPolicy = {
     assert(window.isFinite, s"window must be finite: $window")
 
@@ -211,7 +212,7 @@ object FailureAccrualPolicy {
    */
   def consecutiveFailures(
     numFailures: Int,
-    markDeadFor: Stream[Duration]
+    markDeadFor: LazyList[Duration]
   ): FailureAccrualPolicy = new FailureAccrualPolicy {
 
     // Pad the back of the stream to mark dead for a constant amount (300 seconds)

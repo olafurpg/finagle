@@ -4,6 +4,8 @@ import com.twitter.finagle.stats.{NullStatsReceiver, StatsReceiver}
 import com.twitter.finagle.{Address, NoBrokersAvailableException}
 import com.twitter.finagle.loadbalancer.EndpointFactory
 import com.twitter.util.{Activity, Var}
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Vector
 
 trait RoundRobinSuite {
   // number of servers

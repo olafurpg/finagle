@@ -10,6 +10,8 @@ import com.twitter.util.{Activity, Await, Future, Time, Var}
 import java.net.{InetAddress, InetSocketAddress}
 import org.scalatest.concurrent.{Eventually, IntegrationPatience}
 import org.scalatest.FunSuite
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ Range, Vector }
 
 class LoadBalancerFactoryTest extends FunSuite
   with StringClient
@@ -174,7 +176,7 @@ class LoadBalancerFactoryTest extends FunSuite
       }
     }
 
-    val addresses = (10 to 0 by -1).map { i =>
+    val addresses = (Range.inclusive(10, 0) by -1).map { i =>
       Address(InetSocketAddress.createUnresolved(s"inet-address-$i", 0))
     }
 

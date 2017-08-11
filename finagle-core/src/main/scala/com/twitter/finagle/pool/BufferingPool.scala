@@ -5,6 +5,7 @@ import com.twitter.finagle.util.ConcurrentRingBuffer
 import com.twitter.util.{Future, Time}
 import java.util.concurrent.atomic.AtomicBoolean
 import scala.annotation.tailrec
+import strawman.collection.stringToStringOps
 
 /**
  * Buffers up to `size` connections and produces/closes new ones beyond that limit.

@@ -1,6 +1,8 @@
 package com.twitter.finagle.util
 
 import scala.collection.mutable
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Vector
 
 trait Drv extends (Rng => Int)
 

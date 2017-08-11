@@ -11,6 +11,7 @@ import org.mockito.Mockito.{verify, when}
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
+import strawman.collection.immutable.{ List, Nil }
 
 @RunWith(classOf[JUnitRunner])
 class JvmFilterTest extends FunSuite with MockitoSugar {

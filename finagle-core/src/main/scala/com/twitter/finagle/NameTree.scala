@@ -2,6 +2,8 @@ package com.twitter.finagle
 
 import com.twitter.finagle.util.Showable
 import scala.annotation.tailrec
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Nil
 
 /**
  * Name trees represent a composite T-typed name whose interpretation

@@ -6,6 +6,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import scala.util.Random
 import scala.util.control.NonFatal
+import strawman.collection.stringToStringOps
 
 @RunWith(classOf[JUnitRunner])
 class NameTreeTest extends FunSuite {

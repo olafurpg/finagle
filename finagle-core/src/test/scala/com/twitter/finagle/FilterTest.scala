@@ -7,6 +7,7 @@ import org.mockito.Mockito.{never, spy, times, verify}
 import org.mockito.Matchers._
 import com.twitter.finagle.service.{ConstantService, NilService}
 import com.twitter.util.{Await, Future, Time}
+import strawman.collection.immutable.List
 
 @RunWith(classOf[JUnitRunner])
 class FilterTest extends FunSuite {

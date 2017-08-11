@@ -7,6 +7,7 @@ import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
+import strawman.collection.immutable.Map
 
 @RunWith(classOf[JUnitRunner])
 class ServiceFactoryCacheTest extends FunSuite with MockitoSugar {

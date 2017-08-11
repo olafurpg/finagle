@@ -3,6 +3,8 @@ package com.twitter.finagle
 import com.twitter.util._
 import java.net.SocketAddress
 import java.util.concurrent.atomic.AtomicReference
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Map
 
 /**
  * A group is a dynamic set of `T`-typed values. It is used to

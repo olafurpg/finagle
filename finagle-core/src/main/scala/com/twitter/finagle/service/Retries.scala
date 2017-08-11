@@ -4,6 +4,7 @@ import com.twitter.finagle._
 import com.twitter.finagle.param.{HighResTimer, Stats}
 import com.twitter.finagle.stats.{Counter, StatsReceiver}
 import com.twitter.util._
+import strawman.collection.immutable.LazyList
 
 /**
  * The [[Stack]] parameters and modules for configuring
@@ -53,7 +54,7 @@ object Retries {
    */
   case class Budget(
       retryBudget: RetryBudget,
-      requeueBackoffs: Stream[Duration] = Budget.emptyBackoffSchedule) {
+      requeueBackoffs: LazyList[Duration] = Budget.emptyBackoffSchedule) {
     def this(retryBudget: RetryBudget) =
       this(retryBudget, Budget.emptyBackoffSchedule)
 
@@ -176,7 +177,7 @@ object Retries {
 
   private[this] def newRequeueFilter[Req, Rep](
     retryBudget: RetryBudget,
-    retrySchedule: Stream[Duration],
+    retrySchedule: LazyList[Duration],
     withdrawsOnly: Boolean,
     statsReceiver: StatsReceiver,
     timer: Timer,

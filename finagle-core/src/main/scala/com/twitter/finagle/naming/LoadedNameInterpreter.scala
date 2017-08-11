@@ -3,6 +3,7 @@ package com.twitter.finagle.naming
 import com.twitter.finagle.{Dtab, Path, Name, NameTree}
 import com.twitter.finagle.util.LoadService
 import com.twitter.util.Activity
+import strawman.collection.immutable.{ ::, Nil }
 
 class MultipleNameInterpretersException(val interpreters: Seq[NameInterpreter])
   extends IllegalStateException(

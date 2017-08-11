@@ -5,6 +5,8 @@ import com.twitter.finagle.stats.{NullStatsReceiver, StatsReceiver}
 import com.twitter.finagle.util.Rng
 import com.twitter.finagle.{Address, NoBrokersAvailableException, ServiceFactory}
 import com.twitter.util.{Activity, Var}
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Vector
 
 trait P2CSuite {
   // number of servers

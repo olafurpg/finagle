@@ -4,6 +4,8 @@ import com.twitter.finagle.util._
 import com.twitter.logging.Logger
 import com.twitter.util._
 import scala.util.control.NoStackTrace
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ ::, List, Map }
 
 /**
  * Indicates that a [[com.twitter.finagle.Resolver]] was not found for the

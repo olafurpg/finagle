@@ -1,6 +1,8 @@
 package com.twitter.finagle
 
 import com.twitter.util.{Closable, Var, FuturePool}
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Range
 
 /**
  * A Resolver that asynchronously resolves an inet address.
@@ -11,7 +13,7 @@ class TestAsyncInetResolver extends Resolver {
   val scheme: String = "asyncinet"
 
   private[this] object Port {
-    val range = 1 to 65535
+    val range = Range.inclusive(1, 65535)
     def unapply(str: String): Option[Int] = {
       try Some(Integer.parseInt(str)) filter(range contains _)
       catch { case _: NumberFormatException => None }

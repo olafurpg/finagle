@@ -9,6 +9,7 @@ import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito.{times, verify}
 import org.mockito.Mockito
 import org.mockito.Matchers._
+import strawman.collection.immutable.Range
 
 @RunWith(classOf[JUnitRunner])
 class CacheTest extends FunSuite with MockitoSugar {
@@ -17,7 +18,7 @@ class CacheTest extends FunSuite with MockitoSugar {
     val timer = new MockTimer
     val evictor = mock[Object => Unit]
     val cache = Mockito.spy(new Cache[Object](5, 5.seconds, timer, Some(evictor)))
-    val objects = 0 until 10 map {
+    val objects = Range(0, 10) map {
       _ => mock[Object]
     }
   }

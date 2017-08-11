@@ -2,6 +2,7 @@ package com.twitter.finagle.service
 
 import com.twitter.util.{Future, Time}
 import com.twitter.finagle.{ServiceFactory, ClientConnection, Status}
+import strawman.collection.stringToStringOps
 
 /**
  * A [[com.twitter.finagle.ServiceFactory]] that fails to construct services.

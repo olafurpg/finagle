@@ -6,6 +6,7 @@ import com.twitter.finagle.stats._
 import com.twitter.finagle.util.DefaultMonitor
 import com.twitter.util.{Activity, Var}
 import java.util.logging.{Level, Logger}
+import strawman.collection.stringToStringOps
 
 /**
  * Exposes a [[Stack.Module]] which composes load balancing into the respective

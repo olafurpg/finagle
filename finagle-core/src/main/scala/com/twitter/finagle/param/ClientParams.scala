@@ -3,6 +3,7 @@ package com.twitter.finagle.param
 import com.twitter.finagle.service.{Retries, RetryBudget}
 import com.twitter.finagle.Stack
 import com.twitter.util.Duration
+import strawman.collection.immutable.LazyList
 
 /**
  * A collection of methods for basic configuration of Finagle clients.
@@ -37,6 +38,6 @@ trait ClientParams[A <: Stack.Parameterized[A]] { self: Stack.Parameterized[A] =
    *
    * @see [[https://twitter.github.io/finagle/guide/Clients.html#retries]]
    */
-  def withRetryBackoff(backoff: Stream[Duration]): A =
+  def withRetryBackoff(backoff: LazyList[Duration]): A =
     self.configured(self.params[Retries.Budget].copy(requeueBackoffs = backoff))
 }

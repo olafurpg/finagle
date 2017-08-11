@@ -11,10 +11,11 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{OneInstancePerTest, BeforeAndAfter, FunSuite}
 import scala.util.Random
+import strawman.collection.immutable.{ List, Range }
 
 @RunWith(classOf[JUnitRunner])
 class TraceTest extends FunSuite with MockitoSugar with BeforeAndAfter with OneInstancePerTest {
-  val Seq(id0, id1, id2) = 0 until 3 map { i =>
+  val Seq(id0, id1, id2) = Range(0, 3) map { i =>
     TraceId(Some(SpanId(i)), Some(SpanId(i)), SpanId(i), None, Flags(i))
   }
 

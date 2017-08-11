@@ -2,6 +2,7 @@ package com.twitter.finagle.util
 
 import com.twitter.logging.Logger
 import com.twitter.util.{JavaTimer, ProxyTimer, Timer}
+import strawman.collection.immutable.+:
 
 /**
  * A Finagle's trusty timer that should satisfy a certain level of throughput/latency

@@ -4,6 +4,7 @@ import java.util.{Collection => JCollection, Map => JMap}
 import scala.annotation.varargs
 import scala.collection.JavaConverters._
 import scala.collection.immutable
+import strawman.collection.immutable.Map
 
 /**
  * An address identifies the location of an object--it is a bound

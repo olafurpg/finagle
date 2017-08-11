@@ -9,6 +9,8 @@ import com.twitter.util._
 import org.scalatest.FunSuite
 import scala.collection.mutable
 import scala.language.reflectiveCalls
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Vector
 
 class P2CLeastLoadedTest extends FunSuite with App with P2CSuite {
   flag.parseArgs(Array("-com.twitter.finagle.loadbalancer.exp.loadMetric=leastReq"))

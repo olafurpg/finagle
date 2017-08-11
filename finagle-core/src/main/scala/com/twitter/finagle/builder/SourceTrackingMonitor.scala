@@ -6,6 +6,7 @@ import com.twitter.util.Monitor
 import java.io.IOException
 import java.util.logging.{Level, Logger}
 import scala.annotation.tailrec
+import strawman.collection.immutable.Nil
 
 /**
  * A monitor that unrolls the exception causes to report source information if any

@@ -5,6 +5,7 @@ import com.twitter.finagle.loadbalancer.EndpointFactory
 import com.twitter.finagle.util.Rng
 import com.twitter.util._
 import scala.collection.mutable
+import strawman.collection.immutable.Vector
 
 private[loadbalancer] trait ApertureSuite {
   class Empty extends Exception

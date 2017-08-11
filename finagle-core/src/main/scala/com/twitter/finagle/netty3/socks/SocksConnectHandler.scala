@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicReference
 import org.jboss.netty.buffer.{ChannelBuffer, ChannelBuffers}
 import org.jboss.netty.channel._
 import scala.collection.breakOut
+import strawman.collection.immutable.Map
 
 object SocksConnectHandler {
   // Throwables used as `cause` fields for ConnectionFailedExceptions.

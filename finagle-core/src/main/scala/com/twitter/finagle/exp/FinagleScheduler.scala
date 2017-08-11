@@ -7,6 +7,8 @@ import com.twitter.finagle.util.DefaultLogger
 import com.twitter.jvm.numProcs
 import java.util.concurrent.{LinkedTransferQueue, ThreadFactory, ThreadPoolExecutor, TimeUnit}
 import scala.collection.mutable
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ ::, Nil }
 
 object scheduler extends GlobalFlag[String](
   "local",

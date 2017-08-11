@@ -10,6 +10,8 @@ import com.twitter.finagle.util.Rng
 import com.twitter.util.{Function => _, _}
 import java.net.InetSocketAddress
 import org.scalatest.FunSuite
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ Map, Range }
 
 private object TrafficDistributorTest {
   // The distributor is not privy to this wrapped socket address and
@@ -28,7 +30,7 @@ private object TrafficDistributorTest {
   }
 
   val weightClass: (Double, Int) => Set[Address] =
-    (w, size) => (0 until size).toSet.map { i: Int =>
+    (w, size) => Range(0, size).toSet.map { i: Int =>
       WeightedAddress(WeightedTestAddr(i, w), w)
     }
 
@@ -219,7 +221,7 @@ class TrafficDistributorTest extends FunSuite {
   })
 
   test("memoize calls to newEndpoint and newBalancer") (new Ctx {
-    val init: Set[Address] = (1 to 5).map(Address(_)).toSet
+    val init: Set[Address] = Range.inclusive(1, 5).map(Address(_)).toSet
     val dest = Var(Activity.Ok(init))
 
     newDist(dest, autoPrime = true)
@@ -229,7 +231,7 @@ class TrafficDistributorTest extends FunSuite {
     assert(balancers.size == 1)
     assert(balancers.head.endpoints.sample() == init.map(AddressFactory))
 
-    val update: Set[Address] = (3 to 10).map(Address(_)).toSet
+    val update: Set[Address] = Range.inclusive(3, 10).map(Address(_)).toSet
     dest() = Activity.Ok(update)
     assert(newEndpointCalls != init.size + update.size)
     assert(newEndpointCalls == (init ++ update).size)
@@ -238,7 +240,7 @@ class TrafficDistributorTest extends FunSuite {
   })
 
   test("partition endpoints into weight classes") (new Ctx {
-    val init: Set[Address] = (1 to 5).map { i =>
+    val init: Set[Address] = Range.inclusive(1, 5).map { i =>
       WeightedAddress(Address(i), i)
     }.toSet
     val dest = Var(Activity.Ok(init))
@@ -280,7 +282,7 @@ class TrafficDistributorTest extends FunSuite {
   })
 
   test("respect lazy eviction") (new Ctx {
-    val init: Set[Address] = (1 to 5).map(Address(_)).toSet
+    val init: Set[Address] = Range.inclusive(1, 5).map(Address(_)).toSet
     val dest = Var(Activity.Ok(init))
 
     var endpointStatus: Status = Status.Open

@@ -1,6 +1,6 @@
 package com.twitter.finagle.util
 
-import collection.mutable.ArrayBuffer
+import strawman.collection.mutable.ArrayBuffer
 
 /**
  * A construct providing latched, asynchronous execution of side-effecting

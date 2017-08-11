@@ -1,7 +1,7 @@
 package com.twitter.finagle.framer
 
 import com.twitter.io.{Buf, ByteReader}
-import scala.collection.mutable.ArrayBuffer
+import strawman.collection.mutable.ArrayBuffer
 
 private[finagle] object LengthFieldFramer {
 

@@ -12,6 +12,7 @@ import org.mockito.Mockito.{atLeastOnce, spy, verify, when}
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{BeforeAndAfter, FunSuite}
 import scala.collection.JavaConverters._
+import strawman.collection.immutable.Map
 
 object BindingFactoryTest {
   object TestNamer {

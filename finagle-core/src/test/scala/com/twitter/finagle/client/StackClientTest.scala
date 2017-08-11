@@ -25,6 +25,7 @@ import org.junit.runner.RunWith
 import org.scalatest.{BeforeAndAfter, FunSuite}
 import org.scalatest.concurrent.{Eventually, IntegrationPatience}
 import org.scalatest.junit.JUnitRunner
+import strawman.collection.stringToStringOps
 
 private object StackClientTest {
   case class LocalCheckingStringClient(

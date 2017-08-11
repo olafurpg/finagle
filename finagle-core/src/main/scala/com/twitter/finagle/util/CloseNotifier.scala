@@ -1,6 +1,7 @@
 package com.twitter.finagle.util
 
 import com.twitter.util.{Closable, Future, Promise, Return, Time}
+import strawman.collection.immutable.{ List, Nil }
 
 /**
  * Allows resources to register their handlers to be invoked when service is closing.

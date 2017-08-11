@@ -4,6 +4,7 @@ import com.twitter.io.Buf
 import com.twitter.util.{Return, Throw}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import strawman.collection.immutable.Map
 
 @RunWith(classOf[JUnitRunner])
 class MarshalledContextTest extends AbstractContextTest {

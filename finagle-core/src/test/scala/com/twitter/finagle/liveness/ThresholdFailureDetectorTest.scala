@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import org.scalatest.FunSuite
 import org.scalatest.concurrent.{Eventually, IntegrationPatience}
 import org.scalatest.junit.AssertionsForJUnit
+import strawman.collection.immutable.Range
 
 class ThresholdFailureDetectorTest extends FunSuite
   with AssertionsForJUnit
@@ -155,7 +156,7 @@ class ThresholdFailureDetectorTest extends FunSuite
     timer.tick()
     assert(d.status == Status.Open)
     // after 10ms mark busy, keep in busy state for 1000ms until it closes
-    (1 to 99) foreach { p =>
+    Range.inclusive(1, 99) foreach { p =>
       tc.advance(10.milliseconds)
       timer.tick()
       assert(d.status == Status.Busy)

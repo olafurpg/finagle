@@ -6,6 +6,8 @@ import java.net.InetSocketAddress
 import java.util.logging.Logger
 import scala.collection.mutable
 import scala.util.control.NoStackTrace
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ List, Map, Nil }
 
 /**
  * Indicates that an [[com.twitter.finagle.Announcer]] was not found for the

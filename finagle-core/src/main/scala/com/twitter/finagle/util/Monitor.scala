@@ -7,6 +7,7 @@ import com.twitter.{util => ctu}
 import java.net.SocketAddress
 import scala.annotation.tailrec
 import scala.util.control.NonFatal
+import strawman.collection.immutable.Map
 
 private[finagle] object DefaultMonitor {
 

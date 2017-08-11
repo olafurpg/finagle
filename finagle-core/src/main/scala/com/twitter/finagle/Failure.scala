@@ -4,6 +4,8 @@ import com.twitter.logging.{HasLogLevel, Level}
 import com.twitter.util.Future
 import scala.annotation.tailrec
 import scala.util.control.NoStackTrace
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Map
 
 /**
  * Base exception for all Finagle originated failures. These are

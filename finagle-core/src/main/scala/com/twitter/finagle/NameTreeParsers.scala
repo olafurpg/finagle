@@ -1,7 +1,9 @@
 package com.twitter.finagle
 
 import com.twitter.io.Buf
-import scala.collection.mutable.{ArrayBuffer, Buffer}
+import scala.collection.mutable.Buffer
+import strawman.collection.stringToStringOps
+import strawman.collection.mutable.ArrayBuffer
 
 private[finagle] object NameTreeParsers {
   def parsePath(str: String): Path = new NameTreeParsers(str).parseAllPath()

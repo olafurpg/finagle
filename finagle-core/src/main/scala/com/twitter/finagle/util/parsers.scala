@@ -1,6 +1,8 @@
 package com.twitter.finagle.util
 
 import com.twitter.util.Duration
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ List, Nil }
 
 /**
  * Simple parsers for use in pattern matching; e.g.

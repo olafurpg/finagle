@@ -9,7 +9,9 @@ import com.github.benmanes.caffeine.cache.{Caffeine, CacheLoader}
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 import scala.collection.JavaConverters._
-import scala.collection.mutable.ArrayBuffer
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Map
+import strawman.collection.mutable.ArrayBuffer
 
 class SummarizingStatsReceiver extends StatsReceiverWithCumulativeGauges {
   val repr = this

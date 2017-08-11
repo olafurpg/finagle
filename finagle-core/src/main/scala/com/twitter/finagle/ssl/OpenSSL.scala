@@ -5,6 +5,7 @@ import java.util.logging.{Level, Logger}
 import javax.net.ssl._
 
 import collection.mutable.{Map => MutableMap}
+import strawman.collection.stringToStringOps
 
 /*
  * Creates APR/OpenSSL SSLEngines on behalf of the Ssl singleton

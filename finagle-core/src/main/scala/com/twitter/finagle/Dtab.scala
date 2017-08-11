@@ -7,6 +7,8 @@ import java.io.PrintWriter
 import scala.collection.generic.CanBuildFrom
 import scala.collection.immutable.VectorBuilder
 import scala.collection.mutable.Builder
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Vector
 
 
 /**

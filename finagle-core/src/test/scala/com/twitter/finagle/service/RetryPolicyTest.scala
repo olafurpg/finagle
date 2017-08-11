@@ -7,18 +7,19 @@ import com.twitter.util._
 import org.junit.runner.RunWith
 import org.scalatest.FunSpec
 import org.scalatest.junit.JUnitRunner
+import strawman.collection.immutable.{ #::, LazyList }
 
 @RunWith(classOf[JUnitRunner])
 class RetryPolicyTest extends FunSpec {
   def getBackoffs(
     policy: RetryPolicy[Try[Nothing]],
-    exceptions: Stream[Exception]
-  ): Stream[Duration] =
+    exceptions: LazyList[Exception]
+  ): LazyList[Duration] =
     exceptions match {
-      case Stream.Empty => Stream.empty
+      case LazyList.Empty => LazyList.empty
       case e #:: tail =>
         policy(Throw(e)) match {
-          case None => Stream.empty
+          case None => LazyList.empty
           case Some((backoff, p2)) => backoff #:: getBackoffs(p2, tail)
         }
     }
@@ -88,38 +89,38 @@ class RetryPolicyTest extends FunSpec {
   }
 
   describe("RetryPolicy.filter/filterEach") {
-    val backoffs = Stream(10.milliseconds, 20.milliseconds, 30.milliseconds)
+    val backoffs = LazyList(10.milliseconds, 20.milliseconds, 30.milliseconds)
     val policy = RetryPolicy.backoff(backoffs)(iExceptionsOnly).filter(iGreaterThan1)
 
     it("returns None if filter rejects") {
-      val actual = getBackoffs(policy, Stream(IException(0), IException(1)))
-      assert(actual == Stream.empty)
+      val actual = getBackoffs(policy, LazyList(IException(0), IException(1)))
+      assert(actual == LazyList.empty)
     }
 
     it("returns underlying result if filter accepts first") {
-      val actual = getBackoffs(policy, Stream(IException(2), IException(0)))
+      val actual = getBackoffs(policy, LazyList(IException(2), IException(0)))
       assert(actual == backoffs.take(2))
     }
   }
 
   describe("RetryPolicy.filterEach") {
-    val backoffs = Stream(10.milliseconds, 20.milliseconds, 30.milliseconds)
+    val backoffs = LazyList(10.milliseconds, 20.milliseconds, 30.milliseconds)
     val policy = RetryPolicy.backoff(backoffs)(iExceptionsOnly).filterEach(iGreaterThan1)
 
     it("returns None if filterEach rejects") {
-      val actual = getBackoffs(policy, Stream(IException(0), IException(1)))
-      assert(actual == Stream.empty)
+      val actual = getBackoffs(policy, LazyList(IException(0), IException(1)))
+      assert(actual == LazyList.empty)
     }
 
     it("returns underlying result if filterEach accepts") {
-      val actual = getBackoffs(policy, Stream(IException(2), IException(2), IException(0)))
+      val actual = getBackoffs(policy, LazyList(IException(2), IException(2), IException(0)))
       assert(actual == backoffs.take(2))
     }
   }
 
   describe("RetryPolicy.limit") {
     var currentMaxRetries: Int = 0
-    val maxBackoffs = Stream.fill(3)(10.milliseconds)
+    val maxBackoffs = LazyList.fill(3)(10.milliseconds)
     val policy =
       RetryPolicy.backoff(maxBackoffs)(RetryPolicy.ChannelClosedExceptionsOnly)
         .limit(currentMaxRetries)
@@ -127,7 +128,7 @@ class RetryPolicyTest extends FunSpec {
     it("limits retries dynamically") {
       for (i <- 0 until 5) {
         currentMaxRetries = i
-        val backoffs = getBackoffs(policy, Stream.fill(3)(new ChannelClosedException()))
+        val backoffs = getBackoffs(policy, LazyList.fill(3)(new ChannelClosedException()))
         assert(backoffs == maxBackoffs.take(i min 3))
       }
     }
@@ -140,26 +141,26 @@ class RetryPolicyTest extends FunSpec {
     val combinedPolicy =
       RetryPolicy.combine(
         RetryPolicy.backoff(Backoff.const(Duration.Zero).take(2))(RetryPolicy.WriteExceptionsOnly),
-        RetryPolicy.backoff(Stream.fill(3)(channelClosedBackoff))(RetryPolicy.ChannelClosedExceptionsOnly)
+        RetryPolicy.backoff(LazyList.fill(3)(channelClosedBackoff))(RetryPolicy.ChannelClosedExceptionsOnly)
       )
 
     it("return None for unmatched exception") {
-      val backoffs = getBackoffs(combinedPolicy, Stream(new UnsupportedOperationException))
-      assert(backoffs == Stream.empty)
+      val backoffs = getBackoffs(combinedPolicy, LazyList(new UnsupportedOperationException))
+      assert(backoffs == LazyList.empty)
     }
 
     it("mimicks first policy") {
-      val backoffs = getBackoffs(combinedPolicy, Stream.fill(4)(WriteException(new Exception)))
-      assert(backoffs == Stream.fill(2)(writeExceptionBackoff))
+      val backoffs = getBackoffs(combinedPolicy, LazyList.fill(4)(WriteException(new Exception)))
+      assert(backoffs == LazyList.fill(2)(writeExceptionBackoff))
     }
 
     it("mimicks second policy") {
-      val backoffs = getBackoffs(combinedPolicy, Stream.fill(4)(new ChannelClosedException()))
-      assert(backoffs == Stream.fill(3)(channelClosedBackoff))
+      val backoffs = getBackoffs(combinedPolicy, LazyList.fill(4)(new ChannelClosedException()))
+      assert(backoffs == LazyList.fill(3)(channelClosedBackoff))
     }
 
     it("interleaves backoffs") {
-      val exceptions = Stream(
+      val exceptions = LazyList(
         new ChannelClosedException(),
         WriteException(new Exception),
         WriteException(new Exception),
@@ -168,7 +169,7 @@ class RetryPolicyTest extends FunSpec {
       )
 
       val backoffs = getBackoffs(combinedPolicy, exceptions)
-      val expectedBackoffs = Stream(
+      val expectedBackoffs = LazyList(
         channelClosedBackoff,
         writeExceptionBackoff,
         writeExceptionBackoff,

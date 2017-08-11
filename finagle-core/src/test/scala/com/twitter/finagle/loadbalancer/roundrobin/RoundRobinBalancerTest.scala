@@ -4,6 +4,8 @@ import com.twitter.conversions.time._
 import com.twitter.finagle._
 import com.twitter.util.{Function => _, _}
 import org.scalatest.FunSuite
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Vector
 
 class RoundRobinBalancerTest extends FunSuite with RoundRobinSuite {
   case class LoadedFactory(id: Int) extends RRServiceFactory {

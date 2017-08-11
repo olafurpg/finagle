@@ -7,6 +7,7 @@ import com.twitter.finagle.stats.{NullStatsReceiver, StatsReceiver}
 import com.twitter.finagle.tracing.Trace
 import com.twitter.finagle.param.HighResTimer
 import com.twitter.util._
+import strawman.collection.immutable.LazyList
 
 object RetryingService {
 
@@ -127,7 +128,7 @@ object RetryFilter {
    * less correlation between retries. For example [[HighResTimer.Default]].
    */
   def apply[Req, Rep](
-    backoffs: Stream[Duration],
+    backoffs: LazyList[Duration],
     statsReceiver: StatsReceiver = NullStatsReceiver
   )(
     shouldRetry: PartialFunction[(Req, Try[Rep]), Boolean]
@@ -198,7 +199,7 @@ object RetryExceptionsFilter {
    * less correlation between retries. For example [[HighResTimer.Default]].
    */
   def apply[Req, Rep](
-    backoffs: Stream[Duration],
+    backoffs: LazyList[Duration],
     statsReceiver: StatsReceiver = NullStatsReceiver
   )(
     shouldRetry: PartialFunction[Try[Nothing], Boolean]

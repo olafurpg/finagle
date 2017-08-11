@@ -7,6 +7,7 @@ import java.lang.reflect.Field
 import java.util
 import java.util.concurrent.TimeUnit
 import org.jboss.netty.{util => netty}
+import strawman.collection.arrayToArrayOps
 
 private[finagle] object TimerStats {
 

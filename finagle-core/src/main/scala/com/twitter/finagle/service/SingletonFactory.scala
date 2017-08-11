@@ -3,6 +3,7 @@ package com.twitter.finagle.service
 import com.twitter.finagle.util.AsyncLatch
 import com.twitter.finagle.{Service, ServiceFactory, ClientConnection}
 import com.twitter.util.{Future, Promise, Time}
+import strawman.collection.stringToStringOps
 
 /**
  * A [[com.twitter.finagle.ServiceFactory]] that produces

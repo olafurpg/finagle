@@ -3,6 +3,7 @@ package com.twitter.finagle.context
 import com.twitter.io.Buf
 import com.twitter.logging.Logger
 import com.twitter.util.{Local, Return, Throw, Try}
+import strawman.collection.immutable.Map
 
 /**
  * A marshalled context contains bindings that may be

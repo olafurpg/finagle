@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.function.{Function => JFunction}
 import java.util.logging.Logger
 import scala.collection.JavaConverters._
+import strawman.collection.immutable.Map
 
 private[twitter] object ServerRegistry extends StackRegistry {
   private val log = Logger.getLogger(getClass.getName)

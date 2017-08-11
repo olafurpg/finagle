@@ -5,6 +5,7 @@ import com.twitter.util.RichU64String
 import com.twitter.util.{Try, Return, Throw}
 import java.lang.{Boolean => JBool}
 import scala.util.control.NonFatal
+import strawman.collection.stringToStringOps
 
 /**
  * Defines trace identifiers.  Span IDs name a particular (unique)

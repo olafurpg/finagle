@@ -6,6 +6,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import scala.util.Random
+import strawman.collection.immutable.Range
 
 
 @RunWith(classOf[JUnitRunner])
@@ -50,7 +51,7 @@ class LengthFieldFramerTest extends FunSuite with GeneratorDrivenPropertyChecks{
   // Generate a stream of frames of random sizes
   def dataStream(rand: Random): (Seq[Int], Buf) = {
     val frames = rand.nextInt(MaxTestFrames) + 1
-    val frameSizes = (1 to frames).map(_ => rand.nextInt(MaxTestFrameSize))
+    val frameSizes = Range.inclusive(1, frames).map(_ => rand.nextInt(MaxTestFrameSize))
     val stream = frameSizes.map { size =>
       mkTestFrame(size)
     }.foldLeft(Buf.Empty)(_.concat(_))

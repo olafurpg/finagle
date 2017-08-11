@@ -5,6 +5,7 @@ import com.twitter.finagle.loadbalancer._
 import com.twitter.finagle.stats.{Counter, StatsReceiver}
 import com.twitter.util.{Activity, Future, Time}
 import java.util.concurrent.atomic.AtomicLong
+import strawman.collection.immutable.Vector
 
 /**
  * A simple round robin balancer that chooses the next backend in

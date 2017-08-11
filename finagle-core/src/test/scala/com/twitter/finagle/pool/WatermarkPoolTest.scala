@@ -11,6 +11,7 @@ import org.scalatest.FunSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import scala.language.reflectiveCalls
+import strawman.collection.immutable.Range
 
 @RunWith(classOf[JUnitRunner])
 class WatermarkPoolTest extends FunSpec with MockitoSugar {
@@ -250,14 +251,14 @@ class WatermarkPoolTest extends FunSpec with MockitoSugar {
     when(factory.close(any[Time])).thenReturn(Future.Done)
     val pool = new WatermarkPool(factory, 100, 1000)
 
-    val mocks = 0 until 100 map { _ =>
+    val mocks = Range(0, 100) map { _ =>
       val s = mock[Service[Int, Int]]
       when(s.close(any[Time])).thenReturn(Future.Done)
       s
     }
 
     it("should persist 100 connections") {
-      val services = 0 until 100 map { i =>
+      val services = Range(0, 100) map { i =>
         when(factory()).thenReturn(Future.value(mocks(i)))
         Await.result(pool())
       }
@@ -280,7 +281,7 @@ class WatermarkPoolTest extends FunSpec with MockitoSugar {
     it("should return the cached connections for the next 100 apply calls") {
       // We can now fetch them again, incurring no additional object
       // creation.
-      0 until 100 foreach { _ => Await.result(pool()) }
+      Range(0, 100) foreach { _ => Await.result(pool()) }
       mocks foreach { service =>
         verify(service, times(2)).status
       }
@@ -306,7 +307,7 @@ class WatermarkPoolTest extends FunSpec with MockitoSugar {
   describe("Watermark service lifecyle") {
     it("should not leak services when they are born unhealthy") {
       new WatermarkPoolLowOneHighFive {
-        (0 until highWaterMark) foreach { _ =>
+        Range(0, highWaterMark) foreach { _ =>
           val promise = new Promise[Service[Int, Int]]
           when(factory()).thenReturn(promise)
           promise() = Throw(new Exception)
@@ -386,14 +387,14 @@ class WatermarkPoolTest extends FunSpec with MockitoSugar {
       val maxWaiters = 3
       val pool = new WatermarkPool(factory, lowWatermark, highWatermark, maxWaiters = maxWaiters)
 
-      val services = 0 until highWatermark map { _ =>
+      val services = Range(0, highWatermark) map { _ =>
         new Promise[Service[Int, Int]]
       }
       val wrappedServices = services map { s =>
         when(factory()).thenReturn(s)
         pool()
       }
-      0 until maxWaiters map { _ => pool() }
+      Range(0, maxWaiters) map { _ => pool() }
       val f = pool()
       assert(f.isDefined)
       intercept[TooManyWaitersException] { Await.result(f) }

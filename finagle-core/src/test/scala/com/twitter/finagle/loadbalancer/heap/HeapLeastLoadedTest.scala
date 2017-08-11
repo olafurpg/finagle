@@ -8,6 +8,8 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.AssertionsForJUnit
 import org.scalatest.mock.MockitoSugar
 import scala.util.Random
+import strawman.collection.{ arrayToArrayOps, stringToStringOps }
+import strawman.collection.immutable.{ Map, Range, Vector }
 
 class HeapLeastLoadedTest extends FunSuite with MockitoSugar with AssertionsForJUnit {
   class LoadedFactory(which: String) extends ServiceFactory[Unit, LoadedFactory] {
@@ -37,7 +39,7 @@ class HeapLeastLoadedTest extends FunSuite with MockitoSugar with AssertionsForJ
   class Ctx {
     val N = 10
     val statsReceiver = new InMemoryStatsReceiver
-    val half1, half2 = 0 until N/2 map { i => new LoadedFactory(i.toString) }
+    val half1, half2 = Range(0, N / 2) map { i => new LoadedFactory(i.toString) }
     val factories = half1 ++ half2
     val mutableFactories = new ReadWriteVar(factories)
     val nonRng = new Random {
@@ -241,7 +243,7 @@ class HeapLeastLoadedTest extends FunSuite with MockitoSugar with AssertionsForJ
     // Sequentially issue requests to the 2 nodes.
     // Requests should end up getting serviced by more than just one
     // of the nodes.
-    val results = (0 until N).foldLeft(Map.empty[LoadedFactory, Int]) { case (map, i) =>
+    val results = Range(0, N).foldLeft(Map.empty[LoadedFactory, Int]) { case (map, i) =>
       val sequentialRequest = Await.result(b())
       val chosenNode = factories.filter(_.load == 1).head
       sequentialRequest.close()

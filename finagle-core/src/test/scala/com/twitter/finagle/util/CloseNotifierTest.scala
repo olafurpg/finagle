@@ -4,6 +4,7 @@ import com.twitter.util.Promise
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
+import strawman.collection.immutable.{ List, Nil, Range }
 
 @RunWith(classOf[JUnitRunner])
 class CloseNotifierTest extends FunSuite {
@@ -13,7 +14,7 @@ class CloseNotifierTest extends FunSuite {
     val notifier = CloseNotifier.makeLifo(closing)
     var invocations: List[Int] = Nil
 
-    (1 to 10).foreach {
+    Range.inclusive(1, 10).foreach {
       i =>
         notifier.onClose {
           invocations ::= i
@@ -21,7 +22,7 @@ class CloseNotifierTest extends FunSuite {
     }
 
     closing.setDone()
-    assert(invocations == (1 to 10).toList)
+    assert(invocations == Range.inclusive(1, 10).toList)
   }
 
   test("CloseNotifier should invoke onClose handler immediately if close event already happened") {

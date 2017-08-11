@@ -6,6 +6,7 @@ import com.twitter.finagle.stats.NullStatsReceiver
 import com.twitter.finagle.util.Rng
 import com.twitter.util.{Activity, Await, Duration, NullTimer}
 import org.scalatest.FunSuite
+import strawman.collection.immutable.{ List, Vector }
 
 class ApertureTest extends FunSuite with ApertureSuite {
   /**

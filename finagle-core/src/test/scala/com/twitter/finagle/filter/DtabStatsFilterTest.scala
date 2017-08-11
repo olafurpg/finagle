@@ -6,6 +6,7 @@ import org.scalatest.junit.{AssertionsForJUnit, JUnitRunner}
 import com.twitter.finagle.stats.InMemoryStatsReceiver
 import com.twitter.finagle.{Dtab, Service}
 import com.twitter.util.{Await, Future}
+import strawman.collection.immutable.{ List, Nil }
 
 @RunWith(classOf[JUnitRunner])
 class DtabStatsFilterTest extends FunSuite with AssertionsForJUnit {

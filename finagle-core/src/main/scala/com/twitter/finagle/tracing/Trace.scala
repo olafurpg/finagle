@@ -8,6 +8,7 @@ import com.twitter.io.Buf
 import com.twitter.util.{Duration, Future, Return, Stopwatch, Throw, Time, Try}
 import java.net.InetSocketAddress
 import scala.util.Random
+import strawman.collection.immutable.{ List, Map, Nil }
 
 object debugTrace extends GlobalFlag(false, "Print all traces to the console.")
 

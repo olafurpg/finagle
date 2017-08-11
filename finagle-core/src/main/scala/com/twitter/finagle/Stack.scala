@@ -2,6 +2,8 @@ package com.twitter.finagle
 
 import scala.annotation.tailrec
 import scala.collection.mutable
+import strawman.collection.mutable
+import strawman.collection.immutable.{ Map, Nil }
 
 /**
  * Stacks represent stackable elements of type T. It is assumed that

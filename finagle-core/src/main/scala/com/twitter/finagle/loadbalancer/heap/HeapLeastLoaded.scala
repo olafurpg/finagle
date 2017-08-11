@@ -7,6 +7,7 @@ import com.twitter.finagle.{
 import com.twitter.util._
 import scala.annotation.tailrec
 import scala.util.Random
+import strawman.collection.{ arrayToArrayOps, stringToStringOps }
 
 private object HeapBalancer {
   val Penalty: Int = Int.MaxValue

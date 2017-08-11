@@ -30,6 +30,7 @@ import org.jboss.netty.handler.timeout.IdleStateHandler
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.util.control.NonFatal
+import strawman.collection.immutable.Map
 
 /** Bridges a netty3 channel with a transport */
 private[netty3] class ChannelConnector[In, Out](

@@ -2,7 +2,7 @@ package com.twitter.finagle.util
 
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.ConcurrentLinkedQueue
-import scala.collection.mutable.ArrayBuffer
+import strawman.collection.mutable.ArrayBuffer
 
 /**
  * An Updater processes updates in sequence. At most one

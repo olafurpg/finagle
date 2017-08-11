@@ -5,6 +5,8 @@ import com.twitter.util._
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Map
 
 @RunWith(classOf[JUnitRunner])
 class DelayedFactoryTest extends FunSuite {

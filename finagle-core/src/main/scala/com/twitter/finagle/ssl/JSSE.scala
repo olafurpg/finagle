@@ -3,6 +3,8 @@ package com.twitter.finagle.ssl
 import java.util.logging.Logger
 import javax.net.ssl.{SSLContext, TrustManager}
 import scala.collection.mutable.{Map => MutableMap}
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.List
 
 /*
  * Creates JSSE SSLEngines on behalf of the Ssl singleton

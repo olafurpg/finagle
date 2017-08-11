@@ -11,6 +11,8 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import scala.language.reflectiveCalls
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.List
 
 @RunWith(classOf[JUnitRunner])
 class TransportTest extends FunSuite with GeneratorDrivenPropertyChecks {

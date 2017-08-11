@@ -6,6 +6,7 @@ import org.junit.runner.RunWith
 import com.twitter.util.TimeConversions._
 import com.twitter.finagle.{Service, Filter}
 import com.twitter.util.{Throw, Try, Await, Future}
+import strawman.collection.stringToStringOps
 
 @RunWith(classOf[JUnitRunner])
 class FilterTest extends FunSuite {

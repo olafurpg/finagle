@@ -7,6 +7,7 @@ import com.twitter.finagle.util.Rng
 import com.twitter.util.{Future, Time}
 import scala.collection.immutable.VectorBuilder
 import scala.collection.mutable.ListBuffer
+import strawman.collection.immutable.Vector
 
 /**
  * The aperture distributor balances load onto a window, the aperture, of

@@ -2,6 +2,7 @@ package com.twitter.finagle.loadbalancer.aperture
 
 import org.scalatest.FunSuite
 import scala.util.Random
+import strawman.collection.immutable.Range
 
 class RingTest extends FunSuite {
   private[this] val numIndices = 10
@@ -20,7 +21,7 @@ class RingTest extends FunSuite {
   }
 
   test("apply") {
-    (0 until ring.size).foreach { i =>
+    Range(0, ring.size).foreach { i =>
       val pos = unit * i
       withClue(s"Looking up position $pos:") {
         assert(ring(pos) == i)
@@ -66,7 +67,7 @@ class RingTest extends FunSuite {
 
     for (order <- orders) {
       assert(order.toSet.size == ring.size)
-      assert(order.toSet == Set(0 until ring.size:_*))
+      assert(order.toSet == Set(Range(0, ring.size):_*))
     }
   }
 

@@ -8,6 +8,8 @@ import com.twitter.finagle.util.{DefaultLogger, Updater}
 import com.twitter.logging.Level
 import com.twitter.util.{Future, Duration, Time, Throw, Return, Timer, TimerTask}
 import java.util.logging.Logger
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ #::, LazyList }
 
 object FailFastFactory {
   private sealed trait State
@@ -16,7 +18,7 @@ object FailFastFactory {
       since: Time,
       task: TimerTask,
       ntries: Int,
-      backoffs: Stream[Duration])
+      backoffs: LazyList[Duration])
     extends State
 
   private val url = "https://twitter.github.io/finagle/guide/FAQ.html#why-do-clients-see-com-twitter-finagle-failedfastexception-s"
@@ -30,7 +32,7 @@ object FailFastFactory {
   // "permanently" dead host doesn't create a space leak. since each new backoff
   // that is taken will be held onto by this global Stream (having the trailing
   // `constant` avoids this issue).
-  private val defaultBackoffs: Stream[Duration] =
+  private val defaultBackoffs: LazyList[Duration] =
     Backoff.exponentialJittered(1.second, 32.seconds).take(16) ++ Backoff.constant(32.seconds)
 
   val role = Stack.Role("FailFast")
@@ -112,7 +114,7 @@ private[finagle] class FailFastFactory[Req, Rep](
     label: String,
     logger: Logger = DefaultLogger,
     endpoint: Address = Address.failing,
-    backoffs: Stream[Duration] = FailFastFactory.defaultBackoffs)
+    backoffs: LazyList[Duration] = FailFastFactory.defaultBackoffs)
   extends ServiceFactoryProxy(underlying) {
   import FailFastFactory._
 
@@ -153,7 +155,7 @@ private[finagle] class FailFastFactory[Req, Rep](
 
       case Observation.Fail if state == Ok =>
         val (wait, rest) = backoffs match {
-          case Stream.Empty => (Duration.Zero, Stream.empty[Duration])
+          case LazyList.Empty => (Duration.Zero, LazyList.empty[Duration])
           case wait #:: rest => (wait, rest)
         }
         val now = Time.now
@@ -175,7 +177,7 @@ private[finagle] class FailFastFactory[Req, Rep](
 
       case Observation.TimeoutFail if state != Ok =>
         state match {
-          case Retrying(_, task, _, Stream.Empty) =>
+          case Retrying(_, task, _, LazyList.Empty) =>
             task.cancel()
             // Backoff schedule exhausted. Optimistically become available in
             // order to continue trying.

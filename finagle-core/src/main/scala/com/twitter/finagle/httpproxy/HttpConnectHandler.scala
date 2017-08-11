@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicReference
 
 import org.jboss.netty.channel._
 import org.jboss.netty.handler.codec.http._
+import strawman.collection.stringToStringOps
 
 /**
  * Handle SSL connections through a proxy that accepts HTTP CONNECT.

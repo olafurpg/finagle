@@ -7,6 +7,7 @@ package com.twitter.finagle.loadbalancer
  *
  * @param vector the vector of nodes over which the balancer is balancing.
  */
+import strawman.collection.immutable.Vector
 private abstract class DistributorT[Node](val vector: Vector[Node]) {
 
   type This <: DistributorT[Node]

@@ -4,6 +4,7 @@ import com.twitter.finagle.server.ServerRegistry
 import com.twitter.finagle.util.InetSocketAddressUtil
 import com.twitter.util._
 import java.net.{InetSocketAddress, SocketAddress}
+import strawman.collection.immutable.List
 
 /**
  * Trait ListeningServer represents a bound and listening

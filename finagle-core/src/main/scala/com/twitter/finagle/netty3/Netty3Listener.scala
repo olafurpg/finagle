@@ -24,6 +24,8 @@ import org.jboss.netty.handler.ssl._
 import org.jboss.netty.handler.timeout.{ReadTimeoutException, ReadTimeoutHandler}
 import scala.collection.JavaConverters._
 import scala.collection.mutable
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Map
 
 object Netty3Listener {
 

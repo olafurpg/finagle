@@ -4,6 +4,7 @@ import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import java.util.concurrent.{CyclicBarrier, CountDownLatch}
+import strawman.collection.immutable.Nil
 
 @RunWith(classOf[JUnitRunner])
 class UpdaterTest extends FunSuite {

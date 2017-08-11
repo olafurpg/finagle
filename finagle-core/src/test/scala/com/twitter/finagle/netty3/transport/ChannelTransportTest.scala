@@ -13,6 +13,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import scala.language.reflectiveCalls
+import strawman.collection.stringToStringOps
 
 @RunWith(classOf[JUnitRunner])
 class ChannelTransportTest

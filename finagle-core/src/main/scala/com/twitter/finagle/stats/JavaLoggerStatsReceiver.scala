@@ -5,6 +5,7 @@ import com.twitter.finagle.util.DefaultTimer
 import com.twitter.util.{Timer, TimerTask}
 import java.util.logging.Logger
 import scala.collection.mutable
+import strawman.collection.stringToStringOps
 
 class JavaLoggerStatsReceiver(logger: Logger, timer: Timer)
   extends StatsReceiverWithCumulativeGauges

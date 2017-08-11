@@ -2,6 +2,8 @@ package com.twitter.finagle.util
 
 import java.net.{InetAddress, InetSocketAddress, SocketAddress, UnknownHostException}
 import scala.collection.breakOut
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.List
 
 object InetSocketAddressUtil {
 

@@ -11,6 +11,7 @@ import java.util.logging.Logger
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import strawman.collection.stringToStringOps
 
 @RunWith(classOf[JUnitRunner])
 class NackAdmissionFilterTest extends FunSuite {

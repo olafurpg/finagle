@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.logging.Level
 import java.util.Properties
 import scala.util.control.NonFatal
+import strawman.collection.stringToStringOps
 
 /**
  * Global initialization of Finagle.

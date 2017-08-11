@@ -5,6 +5,7 @@ import scala.annotation.tailrec
 import scala.collection.JavaConverters._
 
 import com.twitter.util.{Time, TimerTask, Duration}
+import strawman.collection.immutable.{ List, Nil }
 
 /**
  * A key-less LIFO cache that supports TTLs.

@@ -6,6 +6,7 @@ import com.twitter.finagle.stats.NullStatsReceiver
 import com.twitter.finagle.util.Rng
 import com.twitter.util.{Await, Closable, Duration}
 import org.scalatest.FunSuite
+import strawman.collection.immutable.Range
 
 class LoadBandTest extends FunSuite with ApertureSuite {
   private val rng = Rng()
@@ -52,7 +53,7 @@ class LoadBandTest extends FunSuite with ApertureSuite {
     bal.update(counts.range(numNodes))
 
     val start = (high+1).toInt
-    val concurrency = (start to numNodes) ++ ((numNodes-1) to start by -1)
+    val concurrency = Range.inclusive(start, numNodes) ++ (Range.inclusive(numNodes - 1, start) by -1)
 
     for (c <- concurrency) {
       var ap = 0

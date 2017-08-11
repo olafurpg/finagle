@@ -11,6 +11,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{BeforeAndAfter, FunSpec}
 import scala.language.reflectiveCalls
+import strawman.collection.immutable.{ LazyList, Range }
 
 @RunWith(classOf[JUnitRunner])
 class RetryFilterTest extends FunSpec
@@ -18,7 +19,7 @@ class RetryFilterTest extends FunSpec
   with BeforeAndAfter
 {
   var timer: JavaTimer = _
-  val backoffs = Stream(1.second, 2.seconds, 3.seconds)
+  val backoffs = LazyList(1.second, 2.seconds, 3.seconds)
   val shouldRetryException: PartialFunction[Try[Nothing], Boolean] = {
     case Throw(WriteException(_)) => true
     case _ => false
@@ -309,7 +310,7 @@ class RetryFilterTest extends FunSpec
           Time.withCurrentTimeFrozen { tc =>
             when(service(123)) thenReturn Future.exception(WriteException(new Exception("i'm exhausted")))
             val f = retryingService(123)
-            1 to 3 foreach { i =>
+            Range.inclusive(1, 3) foreach { i =>
               assert(!f.isDefined)
               verify(service, times(i))(123)
               assert(retriesStat == Seq.empty)
@@ -411,7 +412,7 @@ class RetryFilterTest extends FunSpec
           Time.withCurrentTimeFrozen { tc =>
             when(service(123)) thenReturn Future(badResponse)
             val f = retryingService(123)
-            1 to 3 foreach { i =>
+            Range.inclusive(1, 3) foreach { i =>
               assert(!f.isDefined)
               verify(service, times(i))(123)
               assert(retriesStat == Seq.empty)

@@ -6,6 +6,7 @@ import com.twitter.finagle.service.{DelayedFactory, FailingFactory, ServiceFacto
 import com.twitter.finagle.stats.{StatsReceiver, NullStatsReceiver}
 import com.twitter.finagle.util.{Drv, Rng}
 import com.twitter.util._
+import strawman.collection.immutable.Map
 
 private object TrafficDistributor {
   /**

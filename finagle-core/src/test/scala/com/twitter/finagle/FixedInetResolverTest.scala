@@ -8,6 +8,7 @@ import java.net.{UnknownHostException, InetAddress}
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import strawman.collection.immutable.Range
 
 @RunWith(classOf[JUnitRunner])
 class FixedInetResolverTest extends FunSuite {
@@ -48,7 +49,7 @@ class FixedInetResolverTest extends FunSuite {
   test("Caching resolver caches successes") {
     new Ctx {
       // make the same request n-times
-      val hostnames = (1 to 5).map { i => s"1.2.3.$i:100" }
+      val hostnames = Range.inclusive(1, 5).map { i => s"1.2.3.$i:100" }
       val iterations = 10
       for(i <- 1 to iterations; hostname <- hostnames) {
         val request = resolver.bind(hostname).changes.filter(_ != Addr.Pending)

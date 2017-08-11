@@ -5,6 +5,7 @@ import com.twitter.finagle.context
 import com.twitter.finagle.context.Contexts
 import com.twitter.finagle.stats.StatsReceiver
 import com.twitter.util._
+import strawman.collection.immutable.{ #::, LazyList }
 
 /**
  * Requeues service application failures that are encountered in modules below it.
@@ -38,7 +39,7 @@ import com.twitter.util._
  */
 private[finagle] class RequeueFilter[Req, Rep](
     retryBudget: RetryBudget,
-    retryBackoffs: Stream[Duration],
+    retryBackoffs: LazyList[Duration],
     statsReceiver: StatsReceiver,
     canRetry: () => Boolean,
     maxRetriesPerReq: Double,
@@ -68,7 +69,7 @@ private[finagle] class RequeueFilter[Req, Rep](
     service: Service[Req, Rep],
     attempt: Int,
     retriesRemaining: Int,
-    backoffs: Stream[Duration]
+    backoffs: LazyList[Duration]
   ): Future[Rep] = {
     Contexts.broadcast.let(context.Retries, context.Retries(attempt)) {
       service(req).transform {

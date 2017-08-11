@@ -9,6 +9,7 @@ import com.twitter.util.{Await, Future}
 import org.junit.runner.RunWith
 import org.scalatest.junit.{AssertionsForJUnit, JUnitRunner}
 import org.scalatest.FunSuite
+import strawman.collection.immutable.Map
 
 @RunWith(classOf[JUnitRunner])
 class StatsScopingTest extends FunSuite with AssertionsForJUnit {

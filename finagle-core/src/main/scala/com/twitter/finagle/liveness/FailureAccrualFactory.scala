@@ -10,6 +10,7 @@ import com.twitter.finagle.stats.StatsReceiver
 import com.twitter.logging.Level
 import com.twitter.util._
 import scala.util.Random
+import strawman.collection.immutable.LazyList
 
 object FailureAccrualFactory {
   private[this] val rng = new Random
@@ -31,7 +32,7 @@ object FailureAccrualFactory {
   // previous requests, it is likely to do so again. The recent
   // "failure history" should influence how long to mark the endpoint
   // dead for.
-  private[finagle] val jitteredBackoff: Stream[Duration] =
+  private[finagle] val jitteredBackoff: LazyList[Duration] =
     Backoff.equalJittered(5.seconds, 300.seconds)
 
   private[finagle] def defaultPolicy: Function0[FailureAccrualPolicy] = {

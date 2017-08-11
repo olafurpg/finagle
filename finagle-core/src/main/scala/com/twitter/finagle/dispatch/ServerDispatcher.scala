@@ -8,6 +8,7 @@ import com.twitter.logging.Logger
 import com.twitter.util._
 import java.util.concurrent.atomic.AtomicReference
 import scala.util.control.NoStackTrace
+import strawman.collection.immutable.Nil
 
 object GenSerialServerDispatcher {
   private val Eof = Future.exception(new Exception("EOF") with NoStackTrace)

@@ -8,6 +8,7 @@ import org.scalatest.FunSuite
 import org.scalatest.concurrent.{Eventually, IntegrationPatience}
 import org.scalatest.junit.{AssertionsForJUnit, JUnitRunner}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
+import strawman.collection.immutable.List
 
 @RunWith(classOf[JUnitRunner])
 class StatusTest

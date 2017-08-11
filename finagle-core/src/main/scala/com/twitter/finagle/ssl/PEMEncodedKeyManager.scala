@@ -4,6 +4,7 @@ import com.twitter.io.{TempDirectory, StreamIO}
 import java.io._
 import java.security.{KeyStore, SecureRandom}
 import javax.net.ssl._
+import strawman.collection.stringToStringOps
 
 /**
  * Take a PEM-encoded cert and key and turn it into a PKCS#12 keystore

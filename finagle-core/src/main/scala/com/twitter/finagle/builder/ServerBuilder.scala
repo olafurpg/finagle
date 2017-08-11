@@ -20,6 +20,7 @@ import java.net.SocketAddress
 import javax.net.ssl.SSLEngine
 import org.jboss.netty.channel.ServerChannelFactory
 import scala.annotation.implicitNotFound
+import strawman.collection.stringToStringOps
 
 /**
  * A listening server. This is for compatibility with older code that is

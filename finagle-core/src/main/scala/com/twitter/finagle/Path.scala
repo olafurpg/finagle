@@ -5,6 +5,7 @@ import com.twitter.io.Buf
 import com.twitter.finagle.util.Showable
 import java.nio.charset.Charset
 import java.util.BitSet
+import strawman.collection.stringToStringOps
 
 /**
  * A Path comprises a sequence of byte buffers naming a

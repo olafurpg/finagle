@@ -6,6 +6,7 @@ import com.twitter.util.{Duration, JavaSingleton, Return, Throw, Try, TimeoutExc
 import java.util.{concurrent => juc}
 import java.{util => ju}
 import scala.collection.JavaConverters._
+import strawman.collection.immutable.{ #::, LazyList }
 
 /**
  * A function defining retry behavior for a given value type `A`.
@@ -265,7 +266,7 @@ object RetryPolicy extends JavaSingleton {
    * @see [[backoffJava]] for a Java friendly API.
    */
   def backoff[A](
-    backoffs: Stream[Duration]
+    backoffs: LazyList[Duration]
   )(shouldRetry: PartialFunction[A, Boolean]): RetryPolicy[A] = {
     RetryPolicy { e =>
       if (shouldRetry.applyOrElse(e, AlwaysFalse)) {

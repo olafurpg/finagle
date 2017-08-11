@@ -2,6 +2,7 @@ package com.twitter.finagle.tracing
 
 import com.twitter.finagle._
 import com.twitter.util.{Future, Return, Throw}
+import strawman.collection.stringToStringOps
 
 object TraceInitializerFilter {
   val role = Stack.Role("TraceInitializerFilter")

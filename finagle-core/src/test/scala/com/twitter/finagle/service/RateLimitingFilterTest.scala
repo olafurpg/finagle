@@ -10,6 +10,7 @@ import org.mockito.Matchers._
 import com.twitter.util.TimeConversions._
 import com.twitter.finagle.Service
 import com.twitter.util.{Await, Time, Future}
+import strawman.collection.immutable.Range
 
 @RunWith(classOf[JUnitRunner])
 class RateLimitingFilterTest extends FunSuite with MockitoSugar {
@@ -30,7 +31,7 @@ class RateLimitingFilterTest extends FunSuite with MockitoSugar {
 
     var t = Time.now
     Time.withTimeFunction(t) { _ =>
-      (1 to 5) foreach { _ =>
+      Range.inclusive(1, 5) foreach { _ =>
         assert(Await.result(rateLimitedService(1)) == 1)
         t += 100.milliseconds
       }
@@ -43,7 +44,7 @@ class RateLimitingFilterTest extends FunSuite with MockitoSugar {
 
     var t = Time.now
     Time.withTimeFunction(t) { _ =>
-      (1 to 5) foreach { _ =>
+      Range.inclusive(1, 5) foreach { _ =>
         Await.result(rateLimitedService(1)) == 1
         t += 100.milliseconds
       }
@@ -60,8 +61,8 @@ class RateLimitingFilterTest extends FunSuite with MockitoSugar {
 
     var t = Time.now
     Time.withTimeFunction(t) { _ =>
-      (1 to 5) foreach { _ =>
-        (1 to 5) foreach { i => assert(Await.result(rateLimitedService(i)) == 1) }
+      Range.inclusive(1, 5) foreach { _ =>
+        Range.inclusive(1, 5) foreach { i => assert(Await.result(rateLimitedService(i)) == 1) }
         t += 100.milliseconds
       }
     }

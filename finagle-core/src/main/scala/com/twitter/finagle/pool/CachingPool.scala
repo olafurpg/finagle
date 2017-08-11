@@ -7,6 +7,7 @@ import com.twitter.finagle.{
   Status}
 import com.twitter.util.{Future, Time, Duration, Timer}
 import scala.annotation.tailrec
+import strawman.collection.stringToStringOps
 
 /**
  * A pool that temporarily caches items from the underlying one, up to

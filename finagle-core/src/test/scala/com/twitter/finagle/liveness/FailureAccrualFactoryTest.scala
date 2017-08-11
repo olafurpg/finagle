@@ -18,6 +18,8 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import scala.util.Random
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.List
 
 @RunWith(classOf[JUnitRunner])
 class FailureAccrualFactoryTest extends FunSuite with MockitoSugar {

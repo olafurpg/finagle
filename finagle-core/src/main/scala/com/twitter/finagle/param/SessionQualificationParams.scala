@@ -4,6 +4,7 @@ import com.twitter.finagle.Stack
 import com.twitter.finagle.liveness.{FailureAccrualFactory, FailureAccrualPolicy}
 import com.twitter.finagle.service.FailFastFactory
 import com.twitter.util.Duration
+import strawman.collection.immutable.LazyList
 
 /**
  * A collection of methods for configuring modules which help Finagle determine the health
@@ -66,7 +67,7 @@ class SessionQualificationParams[A <: Stack.Parameterized[A]](self: Stack.Parame
   def successRateFailureAccrual(
     successRate: Double,
     window: Duration,
-    backoff: Stream[Duration]
+    backoff: LazyList[Duration]
   ): A = {
     self.configured(FailureAccrualFactory.Param(
       () => FailureAccrualPolicy.successRateWithinDuration(successRate, window, backoff)
@@ -88,7 +89,7 @@ class SessionQualificationParams[A <: Stack.Parameterized[A]](self: Stack.Parame
    */
   def consecutiveFailuresFailureAccrual(
     nFailures: Int,
-    backoff: Stream[Duration]
+    backoff: LazyList[Duration]
   ): A = {
     self.configured(FailureAccrualFactory.Param(
       () => FailureAccrualPolicy.consecutiveFailures(nFailures, backoff)

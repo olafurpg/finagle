@@ -6,6 +6,7 @@ import com.twitter.util.registry.{Entry, GlobalRegistry, SimpleRegistry}
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import strawman.collection.immutable.List
 
 case class TestParam(p1: Int) {
   def mk() = (this, TestParam.param)

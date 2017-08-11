@@ -13,6 +13,7 @@ import org.scalatest.concurrent.{Conductors, IntegrationPatience}
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import scala.language.reflectiveCalls
+import strawman.collection.immutable.LazyList
 
 @RunWith(classOf[JUnitRunner])
 class FailFastFactoryTest extends FunSuite
@@ -22,7 +23,7 @@ class FailFastFactoryTest extends FunSuite
 
   def newCtx() = new {
     val timer = new MockTimer
-    val backoffs = 1.second #:: 2.seconds #:: Stream.empty[Duration]
+    val backoffs = 1.second #:: 2.seconds #:: LazyList.empty[Duration]
     val service = mock[Service[Int, Int]]
     when(service.close(any[Time])).thenReturn(Future.Done)
     val underlying = mock[ServiceFactory[Int, Int]]
@@ -238,7 +239,7 @@ class FailFastFactoryTest extends FunSuite
       val ctx = newCtx()
       import ctx._
 
-      val failfast = new FailFastFactory(underlying, stats, timer, label, backoffs = Stream.empty)
+      val failfast = new FailFastFactory(underlying, stats, timer, label, backoffs = LazyList.empty)
       failfast()
     }
   }

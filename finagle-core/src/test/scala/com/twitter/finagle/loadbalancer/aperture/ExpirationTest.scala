@@ -7,6 +7,7 @@ import com.twitter.finagle.ServiceFactoryProxy
 import com.twitter.finagle.stats.{StatsReceiver, InMemoryStatsReceiver}
 import com.twitter.util._
 import org.scalatest.fixture.FunSuite
+import strawman.collection.immutable.{ Range, Vector }
 
 class ExpirationTest extends FunSuite with ApertureSuite {
   /**
@@ -72,7 +73,7 @@ class ExpirationTest extends FunSuite with ApertureSuite {
     bal.adjustx(1)
     assert(bal.aperturex == 2)
 
-    (0 to 10).foreach { _ => Await.result(bal()).close() }
+    Range.inclusive(0, 10).foreach { _ => Await.result(bal()).close() }
     bal.adjustx(-1)
     assert(bal.aperturex == 1)
 
@@ -84,7 +85,7 @@ class ExpirationTest extends FunSuite with ApertureSuite {
     // Although calling `remake` on an already expired node is harmless,
     // it makes the expired counter hard to reason about, so we want to
     // ensure that we only increment it once per expiration.
-    (0 to 100).foreach { _ =>
+    Range.inclusive(0, 100).foreach { _ =>
       f.tc.advance(bal.idleTime)
       bal.mockTimer.tick()
       assert(bal.expired == 1)
@@ -102,7 +103,7 @@ class ExpirationTest extends FunSuite with ApertureSuite {
 
     // we rely on p2c to ensure that each endpoint gets
     // a request for service acquisition.
-    def checkoutLoop(): Unit = (0 to 100).foreach { _ =>
+    def checkoutLoop(): Unit = Range.inclusive(0, 100).foreach { _ =>
       Await.result(bal()).close()
     }
 

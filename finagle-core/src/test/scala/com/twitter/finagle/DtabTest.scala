@@ -3,6 +3,7 @@ package com.twitter.finagle
 import org.junit.runner.RunWith
 import org.scalatest.{FunSuite, Assertion}
 import org.scalatest.junit.{AssertionsForJUnit, JUnitRunner}
+import strawman.collection.stringToStringOps
 
 @RunWith(classOf[JUnitRunner])
 class DtabTest extends FunSuite with AssertionsForJUnit {

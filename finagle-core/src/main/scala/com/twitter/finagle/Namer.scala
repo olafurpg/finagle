@@ -3,6 +3,8 @@ package com.twitter.finagle
 import com.twitter.finagle.naming.NameInterpreter
 import com.twitter.util._
 import scala.util.control.NonFatal
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Nil
 
 /**
  * A namer is a context in which a [[com.twitter.finagle.NameTree

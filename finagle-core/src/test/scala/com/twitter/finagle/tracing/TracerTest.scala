@@ -5,6 +5,7 @@ import org.scalacheck.Gen
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuite
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
+import strawman.collection.immutable.List
 
 @RunWith(classOf[JUnitRunner])
 class TracerTest extends FunSuite

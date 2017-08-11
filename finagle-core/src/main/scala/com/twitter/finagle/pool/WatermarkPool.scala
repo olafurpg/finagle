@@ -6,6 +6,7 @@ import com.twitter.util.{Future, Promise, Time, Throw, Return}
 import java.util.ArrayDeque
 import scala.annotation.tailrec
 import scala.collection.JavaConverters._
+import strawman.collection.stringToStringOps
 
 object WatermarkPool {
   private val TooManyWaiters = Future.exception(new TooManyWaitersException)

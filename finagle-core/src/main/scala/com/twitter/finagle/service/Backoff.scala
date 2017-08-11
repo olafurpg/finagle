@@ -5,6 +5,7 @@ import com.twitter.util.Duration
 import java.util.{concurrent => juc}
 import java.{util => ju}
 import scala.collection.JavaConverters._
+import strawman.collection.immutable.LazyList
 
 /**
  * Implements various backoff strategies.
@@ -22,7 +23,7 @@ object Backoff {
    * This is a smarter version of [[Stream.iterate]] in the way that it goes to
    * [[Backoff.const]] (to save allocations) as long as `f` doesn't change its input.
    */
-  private[this] def tailless(start: Duration)(f: Duration => Duration): Stream[Duration] = {
+  private[this] def tailless(start: Duration)(f: Duration => Duration): LazyList[Duration] = {
     val next = f(start)
     start #:: (if (next == start) const(next) else tailless(next)(f))
   }
@@ -32,14 +33,14 @@ object Backoff {
    *
    * @note This is an exact version of [[Stream.iterate]].
    */
-  def apply(start: Duration)(f: Duration => Duration): Stream[Duration] = Stream.iterate(start)(f)
+  def apply(start: Duration)(f: Duration => Duration): LazyList[Duration] = LazyList.iterate(start)(f)
 
   /**
    * Create infinite backoffs that grow exponentially by `multiplier`.
    *
    * @see [[exponentialJittered]] for a version that incorporates jitter.
    */
-  def exponential(start: Duration, multiplier: Int): Stream[Duration] =
+  def exponential(start: Duration, multiplier: Int): LazyList[Duration] =
     exponential(start, multiplier, Duration.Top)
 
   /**
@@ -47,7 +48,7 @@ object Backoff {
    *
    * @see [[exponentialJittered]] for a version that incorporates jitter.
    */
-  def exponential(start: Duration, multiplier: Int, maximum: Duration): Stream[Duration] =
+  def exponential(start: Duration, multiplier: Int, maximum: Duration): LazyList[Duration] =
     tailless(start)(prev => maximum.min(prev * multiplier))
 
   /**
@@ -59,7 +60,7 @@ object Backoff {
    * @param maximum must be greater than 0 and greater than or equal to `start`.
    * @see [[decorrelatedJittered]] and [[equalJittered]] for alternative jittered approaches.
    */
-  def exponentialJittered(start: Duration, maximum: Duration): Stream[Duration] =
+  def exponentialJittered(start: Duration, maximum: Duration): LazyList[Duration] =
     exponentialJittered(start, maximum, Rng.threadLocal)
 
   // Don't shift left more than 62 bits to avoid Long overflow.
@@ -70,12 +71,12 @@ object Backoff {
     start: Duration,
     maximum: Duration,
     rng: Rng
-  ): Stream[Duration] = {
+  ): LazyList[Duration] = {
     require(start > Duration.Zero)
     require(maximum > Duration.Zero)
     require(start <= maximum)
     // this is "full jitter" via http://www.awsarchitectureblog.com/2015/03/backoff.html
-    def next(attempt: Int): Stream[Duration] = {
+    def next(attempt: Int): LazyList[Duration] = {
       val shift = math.min(attempt, MaxBitShift)
       val maxBackoff = maximum.min(start * (1L << shift))
       val random = Duration.fromNanoseconds(rng.nextLong(maxBackoff.inNanoseconds))
@@ -92,7 +93,7 @@ object Backoff {
    * @param maximum must be greater than 0 and greater than or equal to `start`.
    * @see [[exponentialJittered]] and [[equalJittered]] for alternative jittered approaches.
    */
-  def decorrelatedJittered(start: Duration, maximum: Duration): Stream[Duration] =
+  def decorrelatedJittered(start: Duration, maximum: Duration): LazyList[Duration] =
     decorrelatedJittered(start, maximum, Rng.threadLocal)
 
   /** Exposed for testing */
@@ -100,13 +101,13 @@ object Backoff {
     start: Duration,
     maximum: Duration,
     rng: Rng
-  ): Stream[Duration] = {
+  ): LazyList[Duration] = {
     require(start > Duration.Zero)
     require(maximum > Duration.Zero)
     require(start <= maximum)
 
     // this is "decorrelated jitter" via http://www.awsarchitectureblog.com/2015/03/backoff.html
-    def next(prev: Duration): Stream[Duration] = {
+    def next(prev: Duration): LazyList[Duration] = {
       val randRange = math.abs((prev.inNanoseconds * 3) - start.inNanoseconds)
       val randBackoff =
         if (randRange == 0) start.inNanoseconds
@@ -125,7 +126,7 @@ object Backoff {
    *
    * @see [[exponentialJittered]] and [[decorrelatedJittered]] for alternative jittered approaches.
    */
-  def equalJittered(start: Duration, maximum: Duration): Stream[Duration] =
+  def equalJittered(start: Duration, maximum: Duration): LazyList[Duration] =
     equalJittered(start, maximum, Rng.threadLocal)
 
   /** Exposed for testing */
@@ -133,12 +134,12 @@ object Backoff {
     start: Duration,
     maximum: Duration,
     rng: Rng = Rng.threadLocal
-  ): Stream[Duration] = {
+  ): LazyList[Duration] = {
     require(start > Duration.Zero)
     require(maximum > Duration.Zero)
     require(start <= maximum)
     // this is "equal jitter" via http://www.awsarchitectureblog.com/2015/03/backoff.html
-    def next(attempt: Int): Stream[Duration] = {
+    def next(attempt: Int): LazyList[Duration] = {
       val shift = math.min(attempt - 1, MaxBitShift)
       val halfExp = start * (1L << shift)
       val backoff = halfExp + Duration.fromNanoseconds(rng.nextLong(halfExp.inNanoseconds))
@@ -151,23 +152,23 @@ object Backoff {
   /**
    * Create infinite backoffs that grow linear by `offset`.
    */
-  def linear(start: Duration, offset: Duration): Stream[Duration] =
+  def linear(start: Duration, offset: Duration): LazyList[Duration] =
     linear(start, offset, Duration.Top)
 
   /**
    * Create infinite backoffs that grow linear by `offset`, capped at `maximum`.
    */
-  def linear(start: Duration, offset: Duration, maximum: Duration): Stream[Duration] =
+  def linear(start: Duration, offset: Duration, maximum: Duration): LazyList[Duration] =
     tailless(start)(prev => maximum.min(prev + offset))
 
   /** Alias for [[const]], which is a reserved word in Java */
-  def constant(start: Duration): Stream[Duration] = const(start)
+  def constant(start: Duration): LazyList[Duration] = const(start)
 
   /** See [[constant]] for a Java friendly API */
-  def const(start: Duration): Stream[Duration] = {
+  def const(start: Duration): LazyList[Duration] = {
     // We don't want to allocate a new cons on each element in the infinite
     // stream as it's done in Stream.continually so we reuse it.
-    lazy val self: Stream[Duration] = Stream.cons(start, self)
+    lazy val self: LazyList[Duration] = LazyList.cons(start, self)
     self
   }
 
@@ -176,12 +177,12 @@ object Backoff {
    *
    * @note This is an exact version of [[Stream.continually]].
    */
-  def fromFunction(f: () => Duration): Stream[Duration] = Stream.continually(f())
+  def fromFunction(f: () => Duration): LazyList[Duration] = LazyList.continually(f())
 
   /**
    * Convert a [[Stream]] of [[Duration Durations]] into a Java-friendly representation.
    */
-  def toJava(backoffs: Stream[Duration]): juc.Callable[ju.Iterator[Duration]] = {
+  def toJava(backoffs: LazyList[Duration]): juc.Callable[ju.Iterator[Duration]] = {
     new ju.concurrent.Callable[ju.Iterator[Duration]] {
       def call(): ju.Iterator[Duration] = backoffs.toIterator.asJava
     }

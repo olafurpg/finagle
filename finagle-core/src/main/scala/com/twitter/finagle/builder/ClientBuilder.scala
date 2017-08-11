@@ -27,6 +27,8 @@ import java.util.logging.Level
 import javax.net.ssl.SSLContext
 import org.jboss.netty.channel.Channel
 import scala.annotation.{implicitNotFound, varargs}
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ LazyList, Nil }
 
 /**
  * Factory for [[com.twitter.finagle.builder.ClientBuilder]] instances
@@ -893,7 +895,7 @@ class ClientBuilder[Req, Rep, HasCluster, HasCodec, HasHostConnectionLimit] priv
    * @see [[retryPolicy]] for per-request rules on which failures are
    * eligible for retries.
    */
-  def retryBudget(budget: RetryBudget, backoffSchedule: Stream[Duration]): This =
+  def retryBudget(budget: RetryBudget, backoffSchedule: LazyList[Duration]): This =
     configured(Retries.Budget(budget, backoffSchedule))
 
   /**
